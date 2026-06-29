@@ -146,7 +146,7 @@ Després d'instal·lar les Guest Additions (Part 5), es pot crear una carpeta co
 
 1. Selecciona la VM i fes clic a **Inicia** (verd)
 2. La VM arrencarà des de la ISO d'Ubuntu
-3. Selecciona l'idioma (català, castellà o anglès)
+3. Selecciona l'idioma (català o anglès)
 
 ### 4.2 Passos de la instal·lació (Ubuntu Server)
 

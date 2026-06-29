@@ -16,5 +16,3 @@ Cada activitat es divideix en:
 - **Pràctica** — Guia pas a pas, scripts i configuracions
 
 ---
-
-*Documentació en català i castellà (enllaços als README bilingües)*
