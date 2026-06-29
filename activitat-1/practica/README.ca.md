@@ -458,6 +458,63 @@ vboxvideo  40960   0
 > ```
 > Tanca sessió i torna a entrar.
 
+### 📋 Copiar i enganxar entre el teu ordinador i la VM
+
+Un cop tens les Guest Additions instal·lades, activar el porta-retalls compartit és molt fàcil:
+
+**Pas 1 — Tanca la VM (apaga-la)**
+
+```bash
+sudo poweroff
+```
+
+**Pas 2 — Configura el porta-retalls a VirtualBox**
+
+Selecciona la VM (sense engegar-la) i ves a:
+
+```
+┌──────────────────────────────────────────────┐
+│  VM → Configuració → General                  │
+│                                               │
+│  ┌───────────────────────────────────────┐   │
+│  │  General │ Sistema │ Pantalla │ ...   │   │
+│  └───────────────────────────────────────┘   │
+│                                               │
+│  Ves a la pestanya:                           │
+│  ┌───────────────────────────────────────┐   │
+│  │  Bàsic │ Avançat │ Descripció │       │   │
+│  │                                         │   │
+│  │  ☑ Porta-retalls compartit:            │   │
+│  │     [Bidireccional              ▼]     │   │
+│  │             ┌───────────────┐           │   │
+│  │             │ Desactivat    │           │   │
+│  │             │ Des del host  │           │   │
+│  │             │ Des del guest │           │   │
+│  │             │ ✅Bidireccional│ ← tria  │   │
+│  │             └───────────────┘  aquest! │   │
+│  │                                         │   │
+│  │  ☑ Arrossegar i soltar:                │   │
+│  │     [Bidireccional              ▼]     │   │
+│  └───────────────────────────────────────┘   │
+└──────────────────────────────────────────────┘
+```
+
+👉 Tria **Bidireccional** a les dues opcions.
+
+**Pas 3 — Engega la VM i prova-ho**
+
+```bash
+# A l'Ubuntu, copia alguna cosa:
+echo "Hola des d'Ubuntu!" | tee /tmp/prova.txt
+cat /tmp/prova.txt   # selecciona el text amb el ratolí
+```
+
+Ara, a **Windows/macOS/Linux (host)**: prem `Ctrl+V` (o `Cmd+V`) i enganxa el text.
+
+**Prova també al revés:** copia text del teu ordinador i enganxa'l dins de la VM.
+
+> ✅ **Funciona!** Ja pots copiar codi de les pràctiques al teu ordinador i enganxar-lo a la VM sense escriure-ho a mà.
+
 ---
 
 ## 6️⃣ Configuració final
@@ -527,7 +584,8 @@ Marca les caselles quan hagis completat cada pas:
 - [ ] **5** Ubuntu instal·lat dins la VM
 - [ ] **6** Guest Additions instal·lades
 - [ ] **7** `sudo apt update && sudo apt upgrade` fet
-- [ ] **8** Pots fer `neofetch` i veure informació del sistema
+- [ ] **8** Copiar i enganxar funciona (Bidireccional)
+- [ ] **9** Pots fer `neofetch` i veure informació del sistema
 
 **🎉 Enhorabona! Tens un entorn de treball Ubuntu complet!**
 
@@ -543,5 +601,6 @@ Marca les caselles quan hagis completat cada pas:
 | ❌ **No veig la carpeta compartida** | No ets del grup vboxsf | `sudo usermod -aG vboxsf $USER` i reinicia sessió |
 | ❌ **Tot va molt lent** | Poca RAM assignada | Augmenta la RAM a 4 GB (o més) |
 | ❌ **No puc fer SSH** | Xarxa en NAT | Canvia a **Bridge** a Configuració → Xarxa |
+| ❌ **No puc copiar i enganxar** | Porta-retalls no configurat o Guest Additions no instal·lades | 1️⃣ Instal·la Guest Additions (Part 5), 2️⃣ VM → Configuració → General → Avançat → **Bidireccional** |
 | ❌ **La pantalla es veu petita** | Guest Additions no instal·lades | Part 5 — instal·la les Guest Additions |
 | ❌ **No recordo la contrasenya** | Error humà | Millor tornar a crear la VM (són 15 minuts) |
