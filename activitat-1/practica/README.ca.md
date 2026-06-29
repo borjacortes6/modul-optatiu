@@ -1,303 +1,547 @@
-# Pràctica 1: Instal·lació de VirtualBox i creació d'una VM amb Ubuntu
+# 🖥️ Pràctica 1: Crea el teu entorn de treball virtual
 
-**Objectiu:** Instal·lar Oracle VirtualBox a l'ordinador amfitrió i crear una màquina virtual amb Ubuntu 26.04 LTS.
+**🎯 Objectiu:** Instal·lar VirtualBox al teu ordinador i crear una màquina virtual amb Ubuntu Linux, exactament com fem a classe.
 
-**Durada estimada:** 45-60 minuts
-
----
-
-## Requisits previs
-
-- Ordinador amb **Windows, macOS o Linux**
-- Connexió a Internet
-- Almenys **10 GB d'espai lliure** al disc dur
-- Almenys **4 GB de RAM** (8 GB recomanats)
+**⏱ Durada estimada:** 45-60 minuts
 
 ---
 
-## Part 1: Instal·lar Oracle VirtualBox
+## 📋 Què necessites?
 
-### 1.1 Descarregar VirtualBox
+| 🔧 Requisit | 📝 Detall |
+|:-----------|:----------|
+| 💻 Ordinador | Windows, macOS o Linux |
+| 🌐 Internet | per descarregar els programes |
+| 💾 Disc lliure | **10 GB** com a mínim |
+| 🧠 RAM | **4 GB** (millor 8 GB) |
+| 🧊 USB | per gravar la ISO (o arrenca directe) |
 
-1. Obre el navegador i ves a: https://www.virtualbox.org/wiki/Downloads
-2. Selecciona el paquet corresponent al teu sistema operatiu amfitrió:
+> 💡 **Si tens dubtes** en qualsevol pas, pregunta abans de seguir!
 
-| Sistema amfitrió | Paquet a descarregar |
-|-----------------|----------------------|
-| Windows         | `VirtualBox-7.2.8-123456-Win.exe` |
-| macOS           | `VirtualBox-7.2.8-123456-OSX.dmg` |
-| Linux Ubuntu    | `VirtualBox-7.2.8-123456-Ubuntu-jammy_amd64.deb` |
-| Linux Fedora    | `VirtualBox-7.2.8-123456-Fedora-38.x86_64.rpm` |
+---
 
-> ✅ **Consell:** Descarrega també el *Extension Pack* (`Oracle_VM_VirtualBox_Extension_Pack-7.2.8.vbox-extpack`) de la mateixa pàgina. Afegeix suport per USB 3.0, xHCI i encriptació de discs.
+## 🗺️ Mapa de la pràctica
 
-### 1.2 Instal·lar VirtualBox
+```
+1️⃣  Instal·lar VirtualBox ──────────────────── 🔗 virtualbox.org
+        │
+2️⃣  Descarregar Ubuntu ─────────────────────── 🔗 ubuntu.com
+        │
+3️⃣  Crear la màquina virtual ───────────────── 🖱️ 3 clics
+        │
+4️⃣  Instal·lar Ubuntu dins la VM ───────────── 💿 ISO
+        │
+5️⃣  Instal·lar Guest Additions ─────────────── 🔧 millores
+        │
+6️⃣  Configurar el sistema ──────────────────── ⚙️ a punt!
+```
 
-**A Windows:**
-- Executa l'instal·lador `.exe`
-- Segueix l'assistent (deixa tot per defecte)
-- Quan et pregunti sobre *Network Interfaces*, fes clic a **Instal·lar** (la xarxa es tallarà moments)
+---
 
-**A macOS:**
-- Obre el fitxer `.dmg`
-- Fes doble clic al paquet `.pkg` i segueix la instal·lació
-- Concedeix els permisos de seguretat si macOS ho demana (Preferències del Sistema → Seguretat i Privacitat)
+## 1️⃣ Instal·lar Oracle VirtualBox
 
-**A Linux Ubuntu/Debian:**
+### 📥 Descarrega'l
+
+**🔗 Enllaç directe:** [descarregar VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+
+Quan obris la web, veuràs una taula com aquesta:
+
+```
+┌─────────────────────────────────────────────┐
+│  Oracle VirtualBox 7.2.8                    │
+│                                             │
+│  ▶ Windows hosts        ← clica aquí si     │
+│  ▶ OS X hosts           ← ets Windows      │
+│  ▶ Linux hosts          ← o aquí si ets    │
+│  ▶ Solaris hosts        ← macOS/Linux      │
+│                                             │
+│  🔗 Extension Pack       ← descarrega      │
+│                           també aquest!     │
+└─────────────────────────────────────────────┘
+```
+
+**📦 Has de descarregar DÓS fitxers:**
+
+| Fitxer | Per a què serveix |
+|:-------|:-----------------|
+| `VirtualBox-7.2.8-Win.exe` (si ets Windows) | El programa principal |
+| `Oracle_VM_VirtualBox_Extension_Pack-7.2.8.vbox-extpack` | USB 3.0, xHCI, encriptació |
+
+### 🛠️ Instal·lació
+
+<details>
+<summary><b>🪟 Si ets Windows — clica aquí</b></summary>
+
+1. Fes doble clic a `VirtualBox-7.2.8-Win.exe`
+2. **Següent → Següent → Següent** (tot per defecte)
+3. Quan aparegui aquesta finestra:
+
+```
+┌──────────────────────────────────────────┐
+│  ⚠️ Advertiment de Xarxa                │
+│                                          │
+│  Les interfícies de xarxa es           │
+│  restabliran. Connexió a Internet       │
+│  interrompuda momentàniament.           │
+│                                          │
+│        [ Sí ]     [ No ]                │
+└──────────────────────────────────────────┘
+```
+
+👉 Clica **Sí** (no passa res, es reconnecta sol)
+
+4. Finalitzar → **Finish**
+
+</details>
+
+<details>
+<summary><b>🍏 Si ets macOS — clica aquí</b></summary>
+
+1. Obre el fitxer `.dmg` descarregat
+2. Fes doble clic al paquet `.pkg`
+3. Segueix l'assistent
+4. macOS et demanarà permís:
+
+   **Preferències del Sistema → Seguretat i Privacitat → Permet**
+
+</details>
+
+<details>
+<summary><b>🐧 Si ets Linux — clica aquí</b></summary>
+
 ```bash
-# Instal·lar dependències
-sudo apt update
-sudo apt install -y wget build-essential
-
-# Instal·lar VirtualBox des del .deb descarregat
-cd ~/Descàrregues
-sudo dpkg -i VirtualBox-7.2*.deb
-sudo apt install -f   # resol dependències pendents
-
-# O bé afegir el repositori oficial per rebre actualitzacions automàtiques:
-wget -O- https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo gpg --dearmor -o /usr/share/keyrings/oracle-vbox.gpg
-echo "deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-vbox.gpg] https://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" | sudo tee /etc/apt/sources.list.d/virtualbox.list
+# Des de la terminal:
 sudo apt update
 sudo apt install -y virtualbox-7.2
 ```
 
-### 1.3 Instal·lar l'Extension Pack
+O, si has descarregat el `.deb`:
 
 ```bash
-# Des del terminal (Linux/macOS):
-VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-7.2.8.vbox-extpack
-
-# A Windows: Obre VirtualBox → Fitxer → Eines → Gestor d'Extension Pack
-# o fes doble clic al fitxer .vbox-extpack
+cd ~/Descàrregues
+sudo dpkg -i VirtualBox-7.2*.deb
+sudo apt install -f
 ```
 
-**Verificació:**
+</details>
+
+### 📦 Instal·lar l'Extension Pack
+
+Quan tinguis VirtualBox obert:
+
+```
+1. Obre VirtualBox
+2. Menú → Fitxer → Eines → Gestor d'Extension Pack
+3. Clica el botó ➕
+4. Selecciona el fitxer .vbox-extpack que has descarregat
+5. Accepta la llicència
+```
+
+✅ **Verifica que funciona:**
+
 ```bash
+# Obre un terminal i escriu:
 VBoxManage --version
-# Sortida esperada: 7.2.8r123456 (o similar)
+
+# 👇 Hauries de veure alguna cosa com:
+7.2.8r123456
 ```
 
 ---
 
-## Part 2: Descarregar Ubuntu 26.04 LTS
+## 2️⃣ Descarregar Ubuntu 26.04 LTS
 
-1. Ves a: https://ubuntu.com/download/server
-2. Descarrega la imatge ISO de **Ubuntu 26.04 LTS (Server)** o **Desktop** segons les teves necessitats
-3. Guarda-la en un lloc on la trobis fàcilment (p. ex. `~/Descàrregues/` o `~/Downloads/`)
+**🔗 Enllaç directe:** [descarregar Ubuntu Server](https://ubuntu.com/download/server)
 
-> ⚠ **Nota:** Per a entorns de desenvolupament IoT i servidors, la versió **Server** (sense entorn gràfic) és suficient i consumeix menys recursos.
+A la web, tria:
 
----
-
-## Part 3: Crear la màquina virtual
-
-### 3.1 Configuració inicial
-
-Obre VirtualBox i fes clic a **Nova** (o `Ctrl+N`).
-
-- **Nom:** `Ubuntu 26.04 LTS`
-- **Carpeta:** (deixa la que ve per defecte)
-- **ISO Image:** Selecciona el fitxer `.iso` descarregat
-- **Tipus:** Linux
-- **Versió:** Ubuntu (64-bit)
-
-Paràmetres recomanats:
-
-| Paràmetre | Valor | Notes |
-|-----------|-------|-------|
-| **RAM** | 4096 MB (4 GB) | Mínim 2048 MB |
-| **CPU** | 2 nuclis | Mínim 1, màxim ½ dels nuclis físics |
-| **Disc dur** | 25-50 GB | Mida dinàmica recomanada |
-| **VRAM** | 16-128 MB | Més per a Desktop env. gràfic |
-| **Xarxa** | NAT | Per defecte, es pot canviar a Bridge més tard |
-| **Controlador** | SATA | Per defecte |
-
-### 3.2 Configurar les xarxes
-
-**NAT (per defecte):**
-- La VM comparteix l'adreça IP del host
-- La VM pot accedir a Internet
-- El host NO pot accedir directament a la VM (cal redirecció de ports)
-
-**Bridge (per a accés directe a la LAN):**
-- La VM obté una IP pròpia al router (ex: 192.168.1.x)
-- El host pot connectar-se a la VM (SSH, servidors)
-- Configuració: VM → Configuració → Xarxa → Mode: `Aurat`
-
-### 3.3 Configurar la carpeta compartida (opcional)
-
-Després d'instal·lar les Guest Additions (Part 5), es pot crear una carpeta compartida:
-
-1. VM → Configuració → Carpetes Compartides
-2. Clica la icona de carpeta amb el signe `+`
-3. Selecciona una carpeta del host (ex: `~/compartit`)
-4. Activa **Muntatge Automàtic** i **Permanent**
-
-### 3.4 Configurar la memòria de vídeo
-
-- Per a Ubuntu **Server** (sense escriptori): 16 MB són suficients
-- Per a Ubuntu **Desktop**: 128 MB (o almenys 64 MB)
-
----
-
-## Part 4: Instal·lar Ubuntu a la VM
-
-### 4.1 Iniciar la instal·lació
-
-1. Selecciona la VM i fes clic a **Inicia** (verd)
-2. La VM arrencarà des de la ISO d'Ubuntu
-3. Selecciona l'idioma (català o anglès)
-
-### 4.2 Passos de la instal·lació (Ubuntu Server)
-
-| Pas | Acció |
-|-----|-------|
-| **Idioma** | Selecciona l'idioma de la instal·lació |
-| **Teclat** | Tria la disposició: `Spanish` o `Catalan` |
-| **Xarxa** | Deixa per defecte (DHCP) |
-| **Mirror** | Selecciona el país més proper per al repositori de paquets |
-| **Disc** | `Use entire disk` (el disc de la VM) |
-| **Perfil** | Introdueix: nom, nom d'usuari (`vboxuser` o el que prefereixis), contrasenya |
-| **SSH** | Activa `Install OpenSSH server` per gestionar-la remotament |
-| **Snaps** | Selecciona els que necessitis (o cap per a una instal·lació mínima) |
-
-### 4.3 Finalitzar i reiniciar
-
-1. Quan la instal·lació acabi, selecciona **Reboot**
-2. La VM et demanarà d'expulsar la ISO (Ctrl+D o des de: Dispositius → Optical Drives → Treure disc de la unitat)
-
-### 4.4 Primera connexió
-
-Inicia sessió amb l'usuari i contrasenya que vas crear:
-
-```bash
-# Connexió local (des de la consola de VirtualBox)
-Ubuntu 26.04 LTS ubuntu tty1
-ubuntu login: vboxuser
-Password: 
+```
+┌─────────────────────────────────────────────┐
+│  Ubuntu 26.04 LTS                           │
+│  Resolute Raccoon                           │
+│                                             │
+│  📥 Download Ubuntu Server     ← clica aquí │
+│                                             │
+│  💡 Alternative: Ubuntu Desktop             │
+│     si vols escriptori gràfic               │
+└─────────────────────────────────────────────┘
 ```
 
-```bash
-# Connexió remota per SSH (si tens la xarxa en Bridge)
-# Des del host:
-ssh vboxuser@<IP-de-la-VM>
+- **Ubuntu Server** (recomanat) — sense finestres, només terminal, consumeix pocs recursos
+- **Ubuntu Desktop** — amb escriptori gràfic (més bonic, però gasta més RAM)
+
+> ⚠️ **Important:** Desa la ISO a la carpeta `Descàrregues` o `Downloads` perquè la trobis fàcilment.
+
+---
+
+## 3️⃣ Crear la màquina virtual
+
+### 🔌 Obre VirtualBox
+
+Veuràs una pantalla com aquesta:
+
+```
+┌─────────────────────────────────────────────────────┐
+│  Oracle VM VirtualBox Manager                       │
+│  ─────────────────────────────────────────────      │
+│  🔵 Nova   ⚙️ Configuració   ▶ Inicia                │
+│  ┌────────────────────────────────────────────┐     │
+│  │                                            │     │
+│  │          ⭐ 'Benvingut a VirtualBox!'       │     │
+│  │                                            │     │
+│  │          Clica 'Nova' per començar         │     │
+│  │                                            │     │
+│  └────────────────────────────────────────────┘     │
+└─────────────────────────────────────────────────────┘
+```
+
+👉 **Clica el botó blau "Nova"** (o prem `Ctrl+N`)
+
+### ✏️ Configura la VM
+
+**Pas 1 — Nom i sistema:**
+
+```
+┌──────────────────────────────────────────────┐
+│  Crear màquina virtual                       │
+│                                              │
+│  Nom:     [ Ubuntu 26.04 LTS              ] │ ← posa aquest nom
+│  Carpeta: (deixa la que ve per defecte)     │
+│  ISO:     [ ... ] 📁                      │ ← selecciona la ISO
+│                                              │
+│  ☐ Skip Unattended Installation             │
+│                                              │
+│  [↩ Enrere]           [▶ Següent]          │
+└──────────────────────────────────────────────┘
+```
+
+**Pas 2 — RAM:**
+
+```
+┌──────────────────────────────────────────────┐
+│  Mida de la memòria                         │
+│                                              │
+│   ───●─────────────────────────────────      │
+│   1GB           4GB                    8GB   │
+│       👆 arrossega fins aquí!                │
+│                                              │
+│  [↩ Enrere]           [▶ Següent]          │
+└──────────────────────────────────────────────┘
+```
+
+👉 Arrossega el punt fins a **4096 MB** (4 GB)
+
+**Pas 3 — Disc dur:**
+
+```
+┌──────────────────────────────────────────────┐
+│  Disc dur                                   │
+│                                              │
+│  ○ No afegir disc virtual                    │
+│  ● Crear un disc virtual ara                 │
+│  ○ Usar un disc virtual existent             │
+│                                              │
+│  [↩ Enrere]           [▶ Següent]          │
+└──────────────────────────────────────────────┘
+```
+
+👉 Deixa marcat **"Crear un disc virtual ara"**
+
+```
+┌──────────────────────────────────────────────┐
+│  Tipus de disc                              │
+│                                              │
+│  ● VDI (VirtualBox Disk Image)               │ ← recomanat
+│  ○ VMDK                                      │
+│  ○ VHD                                       │
+│                                              │
+│  [↩ Enrere]           [▶ Següent]          │
+└──────────────────────────────────────────────┘
+```
+
+```
+┌──────────────────────────────────────────────┐
+│  Tipus d'emmagatzematge                     │
+│                                              │
+│  ○ Mida fixa (ocupa tot ara)                 │
+│  ● Reservat dinàmicament  ← millor opció!  │
+│                                              │
+│  [↩ Enrere]           [▶ Següent]          │
+└──────────────────────────────────────────────┘
+```
+
+**Pas 4 — Mida del disc:**
+
+```
+┌──────────────────────────────────────────────┐
+│  Mida del disc                              │
+│                                              │
+│   ───────────●─────────────────              │
+│   4GB         25GB                   50GB    │
+│               👆 25 GB són suficients        │
+│                                              │
+│  [↩ Enrere]           [▶ Finalitza]        │
+└──────────────────────────────────────────────┘
+```
+
+### 📊 Resum de la configuració
+
+| Paràmetre | Valor que has de posar |
+|:-----------|:-----------------------|
+| 🖥️ **Nom** | `Ubuntu 26.04 LTS` |
+| 💿 **ISO** | La que has descarregat |
+| 🧠 **RAM** | **4096 MB** (4 GB) |
+| ⚡ **CPU** | **2 nuclis** |
+| 💾 **Disc** | **25 GB** (dinàmic) |
+| 🌐 **Xarxa** | NAT (ja ve per defecte) |
+
+> 🛑 **ATENCIÓ:** Si no canvies la RAM a 4 GB, Ubuntu anirà molt lent.
+
+---
+
+## 4️⃣ Instal·lar Ubuntu a la VM
+
+### ▶️ Engega la màquina
+
+Selecciona la VM i clica el botó **▶ Iniciar** (verd).
+
+La pantalla es transformarà en la finestra de la VM:
+
+```
+┌─── "Ubuntu 26.04 LTS" [En marxa] ──────┐
+│                                         │
+│    [🐧 Grub Menu]                       │
+│                                         │
+│    ▶ Try or Install Ubuntu              │
+│      Ubuntu (safe graphics)             │
+│      OEM install (for manufacturers)    │
+│      Boot from next volume              │
+│                                         │
+│    Tria la primera opció i prem ENTER   │
+│                                         │
+└─────────────────────────────────────────┘
+```
+
+### 📝 Passos de la instal·lació
+
+```
+Pas 1: 🗣️  Idioma
+┌─────────────────────────────────────┐
+│  Tria: English                      │
+└─────────────────────────────────────┘
+
+Pas 2: ⌨️  Teclat
+┌─────────────────────────────────────┐
+│  Layout: Spanish                    │
+│  Variant: Spanish / Catalan         │
+└─────────────────────────────────────┘
+
+Pas 3: 🌐  Xarxa
+┌─────────────────────────────────────┐
+│  Deixa per defecte (DHCP)          │
+│  Hauries de veure una IP tipus     │
+│  10.0.2.15 (xarxa NAT)             │
+└─────────────────────────────────────┘
+
+Pas 4: 🌍  Mirror
+┌─────────────────────────────────────┐
+│  Tria: Spain                        │
+└─────────────────────────────────────┘
+
+Pas 5: 💾  Disc
+┌─────────────────────────────────────┐
+│  Use an entire disk                 │
+│  [📦 Ubuntu 26.04 LTS ...]         │
+│                                     │
+│  Marca: [x] Set up this disk       │
+│                                     │
+│  [Done]                             │
+└─────────────────────────────────────┘
+
+Pas 6: 👤  Crea l'usuari
+┌─────────────────────────────────────┐
+│  Your name: [ El teu nom        ]  │
+│  Server name: [ ubuntu-dev      ]  │
+│  Username: [ alumne            ]   │
+│  Password: [ ********         ]    │
+│  Confirm:  [ ********         ]    │
+└─────────────────────────────────────┘
+
+Pas 7: 🔑  SSH
+┌─────────────────────────────────────┐
+│  [x] Install OpenSSH server        │ ← marca això!
+│                                     │
+│  Import SSH identity: No            │
+└─────────────────────────────────────┘
+
+Pas 8: 📦  Snaps
+┌─────────────────────────────────────┐
+│  Pots deixar-ho sense res marcat   │
+│  (o triar Docker si vols)          │
+└─────────────────────────────────────┘
+```
+
+### ✅ Instal·lació completada!
+
+Quan acabi, veuràs:
+
+```
+┌─────────────────────────────────────┐
+│  ✅ Installation complete!          │
+│                                     │
+│  ▶ Reboot Now                       │ ← clica aquí!
+└─────────────────────────────────────┘
+```
+
+**⚠️ Quan reiniciï, treu la ISO:**
+
+1. A la barra de menú de la VM: **Dispositius → Optical Drives → Treure disc de la unitat**
+2. O simplement prem **Enter** quan et demani *"Remove the installation medium"*
+
+### 🎉 Primera connexió
+
+```
+Ubuntu 26.04 LTS ubuntu-dev tty1
+
+ubuntu-dev login: alumne
+Password: ********
+
+alumne@ubuntu-dev:~$ _     ← 🎉 Ja ets dins!
 ```
 
 ---
 
-## Part 5: Instal·lar les Guest Additions
+## 5️⃣ Instal·lar les Guest Additions
 
-Les *Guest Additions* milloren la integració entre el host i el guest: ratolí lliure, portaretalls compartit, carpetes compartides, i redimensionament automàtic de la pantalla.
+> ✨ Les **Guest Additions** fan que tot funcioni millor: el ratolí es mou lliure, pots compartir carpetes, i la pantalla es redimensiona automàticament.
 
-### 5.1 Muntar la ISO de Guest Additions
+### 📀 Muntar el CD
 
-Des de la finestra de la VM:
-- Dispositius → Insert Guest Additions CD image...
+A la barra de menú de la VM:
 
-### 5.2 Instal·lar al guest
+```
+Dispositivos → Insert Guest Additions CD image...
+```
 
-Dins de la VM:
+Dins la VM, fes:
 
 ```bash
-# Instal·lar dependències
+# 1. Instal·la les eines necessàries
 sudo apt update
 sudo apt install -y build-essential dkms linux-headers-$(uname -r)
 
-# Muntar el CD (si no s'ha muntat automàticament)
+# 2. Munta el CD
 sudo mount /dev/cdrom /mnt
 
-# Executar l'instal·lador
+# 3. Executa l'instal·lador
 cd /mnt
 sudo sh ./VBoxLinuxAdditions.run --nox11
 
-# Reiniciar
+# 4. Reinicia
 sudo reboot
 ```
 
-**Verificació:**
+✅ **Comprova que funciona:**
+
 ```bash
-# Comprovar que els mòduls estan carregats
-lsmod | grep vbox
-# Sortida: vboxguest, vboxsf, vboxvideo
+alumne@ubuntu-dev:~$ lsmod | grep vbox
+
+# 👇 Hauries de veure:
+vboxguest  524288  4
+vboxsf     28672   1
+vboxvideo  40960   0
 ```
 
-> ✅ A partir d'aquí, si configures carpetes compartides al host, apareixeran a `/media/sf_<nom_carpeta>` a la VM (cal que l'usuari sigui del grup `vboxsf`).
+> 💡 **Consell:** Si després configures carpetes compartides, apareixeran a `/media/sf_<nom_carpeta>`. Per accedir-hi:
+> ```bash
+> sudo usermod -aG vboxsf $USER
+> ```
+> Tanca sessió i torna a entrar.
 
 ---
 
-## Part 6: Configuració post-instal·lació
+## 6️⃣ Configuració final
 
-### 6.1 Actualitzar el sistema
+### 🔄 Actualitza el sistema
 
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
 
-### 6.2 Configurar el nom de la màquina (hostname)
+### 🏷️ Canvia el nom del teu ordinador
 
 ```bash
 sudo hostnamectl set-hostname ubuntu-dev
-# Comprovar:
-hostnamectl
 ```
 
-### 6.3 Millorar la consola (opcional)
+### 🛠️ Eines útils
 
 ```bash
 sudo apt install -y htop neofetch git curl wget tree
-neofetch  # mostra informació del sistema
 ```
 
-### 6.4 Configurar clau SSH (opcional)
+Prova `neofetch` per veure informació del teu sistema:
+
+```
+alumne@ubuntu-dev:~$ neofetch
+       .-/+oossssoo+/-.               alumne@ubuntu-dev
+   `:+ssssssssssssssssss+:`           -----------------
+ -:+ssssssssssssssssssyssss+-         OS: Ubuntu 26.04 LTS
+.osssssssssssssssssssssssssssso.      Kernel: 7.0.0-22-generic
+.osssssssssssssssssssssssssssso.      Uptime: 5 mins
+:+ssssssssssssssssssssssssssssss+:    Packages: 345
+:+ssssssssssssssssssssssssssssss+:    Shell: bash 5.2
+ -:+ssssssssssssssssssssssssss:-      CPU: Intel i3-10110U (2) @ 2.1GHz
+   .-/+oossssoo+/-.                   Memory: 521MiB / 3.3GiB
+```
+
+### 🔐 Clau SSH per GitHub (opcional)
 
 ```bash
-ssh-keygen -t ed25519 -C "vboxuser@ubuntu-dev"
+ssh-keygen -t ed25519 -C "alumne@ubuntu-dev"
 cat ~/.ssh/id_ed25519.pub
-# Afegeix aquesta clau al teu GitHub/GitLab per pujar codi sense contrasenya
 ```
 
-### 6.5 Assignar memòria swap (si cal)
+👉 Copia el text que surti i afegeix-lo a [github.com/settings/keys](https://github.com/settings/keys)
+
+### 💾 Swap si tens poca RAM (opcional)
 
 ```bash
-# Si tens poca RAM (4 GB o menys), afegeix 2 GB de swap:
 sudo fallocate -l 2G /swapfile
 sudo chmod 600 /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
-# Fer-lo permanent:
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 
 ---
 
-## Verificació final
+## ✅ Llista de verificació final
 
-```bash
-echo "=== Sistema ==="
-uname -a
-echo "=== Memòria ==="
-free -h
-echo "=== Disc ==="
-df -h /
-echo "=== VirtualBox ==="
-lsmod | grep -E 'vboxguest|vboxsf'
-echo "=== Usuari ==="
-whoami
-echo "=== Xarxa ==="
-ip addr show | grep inet
-```
+Marca les caselles quan hagis completat cada pas:
+
+- [ ] **1** VirtualBox instal·lat
+- [ ] **2** Extension Pack instal·lat
+- [ ] **3** Ubuntu ISO descarregada
+- [ ] **4** VM creada amb 4 GB RAM + 2 nuclis + 25 GB disc
+- [ ] **5** Ubuntu instal·lat dins la VM
+- [ ] **6** Guest Additions instal·lades
+- [ ] **7** `sudo apt update && sudo apt upgrade` fet
+- [ ] **8** Pots fer `neofetch` i veure informació del sistema
+
+**🎉 Enhorabona! Tens un entorn de treball Ubuntu complet!**
 
 ---
 
-## Resolució de problemes
+## 🆘 Resolució de problemes
 
-| Problema | Causa probable | Solució |
-|----------|---------------|---------|
-| La VM no arrenca des de la ISO | Ordre d'arrencada incorrecte | VM → Configuració → Sistema → Marca "CD/DVD" primer |
-| "VT-x is not available" | Virtualització desactivada a la BIOS | Reinicia el host, entra a la BIOS/UEFI i activa Intel VT-x / AMD-V |
-| No es veu el ratolí dins la guest | Guest Additions no instal·lades | Instal·la les Guest Additions com a la Part 5 |
-| La carpeta compartida no es veu | Usuari no al grup vboxsf | `sudo usermod -aG vboxsf $USER` i reinicia sessió |
-| La VM es penja | Poca RAM assignada | Augmenta la RAM a 4096 MB a la configuració de la VM |
-| No hi ha so | Controlador d'àudio incorrecte | VM → Configuració → Àudio → Controlador: Intel HD Audio |
-| SSH no connecta | Xarxa en NAT o tallafocs | Canvia a Bridge o afegeix redirecció de ports |
-| No es pot redimensionar la pantalla | Guest Additions no instal·lades o sessió gràfica | Verifica `lsmod | grep vboxvideo` |
+| 🔴 Problema | 🤔 Per què passa? | ✅ Solució |
+|:-----------|:-----------------|:----------|
+| ❌ **"VT-x is not available"** | La virtualització està desactivada a la BIOS | Reinicia l'ordinador, entra a la BIOS (F2/F10/DEL) i activa **Intel VT-x** o **AMD-V** |
+| ❌ **La VM no arrenca** | L'ordre d'arrencada no prioritza el CD | VM → Configuració → Sistema → Marca "CD/DVD" primer |
+| ❌ **Ratolí tancat dins la finestra** | Guest Additions no instal·lades | Ves a la Part 5 i instal·la-les |
+| ❌ **No veig la carpeta compartida** | No ets del grup vboxsf | `sudo usermod -aG vboxsf $USER` i reinicia sessió |
+| ❌ **Tot va molt lent** | Poca RAM assignada | Augmenta la RAM a 4 GB (o més) |
+| ❌ **No puc fer SSH** | Xarxa en NAT | Canvia a **Bridge** a Configuració → Xarxa |
+| ❌ **La pantalla es veu petita** | Guest Additions no instal·lades | Part 5 — instal·la les Guest Additions |
+| ❌ **No recordo la contrasenya** | Error humà | Millor tornar a crear la VM (són 15 minuts) |

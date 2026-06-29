@@ -1,18 +1,25 @@
-# Mòdul optatiu
+# 📚 Mòdul optatiu
 
-Activitats d'aprofundiment en entorns de desenvolupament, automatització i eines professionals per a IoT i sistemes encastats.
-
-## Activitats
-
-| Activitat | Descripció |
-|-----------|------------|
-| 1 | Creació d'un escriptori virtual amb VirtualBox i instal·lació d'Ubuntu Linux |
-
-## Format
-
-Cada activitat es divideix en:
-
-- **Teoria** — Conceptes, fonaments i documentació de suport
-- **Pràctica** — Guia pas a pas, scripts i configuracions
+Activitats d'aprofundiment en eines professionals per a IoT, sistemes encastats i automatització.
 
 ---
+
+## 🗺️ Activitats
+
+| # | Activitat | ✅ Estat |
+|:--|:----------|:---------|
+| 1 | 🖥️ **Crear un entorn virtual** — VirtualBox + Ubuntu Linux | Fet |
+
+---
+
+## 📋 Estructura de cada activitat
+
+```
+📁 activitat-N/
+   ├── 📖 teoria/     →  Conceptes, fonaments, esquemes
+   └── 🔧 practica/   →  Guia pas a pas, scripts, configuracions
+```
+
+---
+
+Per a qualsevol dubte: **pregunta a classe o obre un issue al repositori!** 🚀
