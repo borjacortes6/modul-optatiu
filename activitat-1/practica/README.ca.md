@@ -458,9 +458,9 @@ vboxvideo  40960   0
 > ```
 > Tanca sessió i torna a entrar.
 
-### 📋 Copiar i enganxar entre el teu ordinador i la VM
+### 📋 Copiar i enganxar text entre el teu ordinador i la VM
 
-Un cop tens les Guest Additions instal·lades, activar el porta-retalls compartit és molt fàcil:
+Un cop tens les Guest Additions instal·lades, activar el porta-retalls compartit és molt fàcil. **Atenció: funciona per a TEXT, no per a fitxers.** Per a fitxers (més avall), fes servir Arrossegar i soltar o Carpeta compartida.
 
 **Pas 1 — Tanca la VM (apaga-la)**
 
@@ -515,6 +515,54 @@ Ara, a **Windows/macOS/Linux (host)**: prem `Ctrl+V` (o `Cmd+V`) i enganxa el te
 
 > ✅ **Funciona!** Ja pots copiar codi de les pràctiques al teu ordinador i enganxar-lo a la VM sense escriure-ho a mà.
 
+### 📁 Copiar fitxers entre el teu ordinador i la VM
+
+Per a fitxers, el porta-retalls no serveix. Tens dues opcions:
+
+**Opció A — Arrossegar i soltar (ràpid, per a 1 fitxer)**
+
+Ja l'has activat al pas anterior si vas posar **Bidireccional** a *Arrossegar i soltar*:
+
+```
+1. Al Windows, obre la carpeta on tens el fitxer
+2. Arrossega'l fins a la finestra de la VM
+3. Solta'l → apareixerà dins Ubuntu
+```
+
+**Opció B — Carpeta compartida (per a molts fitxers, la millor)**
+
+A VirtualBox, amb la VM aturada:
+
+```
+VM → Configuració → Carpetes Compartides
+
+┌──────────────────────────────────────────────┐
+│  Carpetes Compartides                        │
+│                                              │
+│  [➕]  Afegeix una carpeta compartida        │
+│                                              │
+│  Ruta de la carpeta: [C:\Users\...\compartit]│
+│  Nom de la carpeta: [compartit           ]   │
+│  ☑ Muntatge automàtic                       │
+│  ☑ Permanent                                │
+│                                              │
+│  [Acceptar]                                  │
+└──────────────────────────────────────────────┘
+```
+
+Un cop engeguis la VM:
+
+```bash
+# Entra al grup vboxsf (només un cop)
+sudo usermod -aG vboxsf $USER
+
+# Reinicia sessió o la VM, i després:
+ls /media/sf_compartit/
+# 👇 Allà hi veuràs els fitxers del Windows
+```
+
+> 💡 **Per anar per feina:** Si només vols un fitxer → arrossega'l. Si són molts o treballaràs sovint → carpeta compartida.
+
 ---
 
 ## 6️⃣ Configuració final
@@ -551,15 +599,6 @@ alumne@ubuntu-dev:~$ neofetch
  -:+ssssssssssssssssssssssssss:-      CPU: Intel i3-10110U (2) @ 2.1GHz
    .-/+oossssoo+/-.                   Memory: 521MiB / 3.3GiB
 ```
-
-### 🔐 Clau SSH per GitHub (opcional)
-
-```bash
-ssh-keygen -t ed25519 -C "alumne@ubuntu-dev"
-cat ~/.ssh/id_ed25519.pub
-```
-
-👉 Copia el text que surti i afegeix-lo a [github.com/settings/keys](https://github.com/settings/keys)
 
 ### 💾 Swap si tens poca RAM (opcional)
 
