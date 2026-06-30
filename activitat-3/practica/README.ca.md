@@ -386,7 +386,19 @@ docker exec nodered-dashboard npm install node-red-dashboard
 docker restart nodered-dashboard
 ```
 
-Espera uns segons que es reinicii.
+> ⚠️ **Si Node-RED no s'inicia** (error de permisos), la carpeta `./nodered/data` s'ha creat com a root. Node-RED corre amb l'usuari `node-red` (UID 1000). Arregla-ho:
+> ```bash
+> sudo chown -R 1000:1000 nodered/data
+> docker restart nodered-dashboard
+> ```
+
+Espera uns segons i comprova que respon:
+
+```bash
+curl -s -o /dev/null -w "HTTP %{http_code}" http://localhost:1880
+```
+
+Si veus `HTTP 200` → ✅ Node-RED funciona.
 
 ### Accedeix a Node-RED des de l'amfitrió
 
