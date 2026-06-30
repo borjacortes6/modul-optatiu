@@ -500,8 +500,8 @@ nano ~/activitat-3/scripts/publisher.py
 ```python
 #!/usr/bin/env python3
 """
-Simulador de sensor de temperatura.
-Publica temperatura a MQTT cada 3 segons com a número simple (sense JSON).
+Simulador de sensors de temperatura i humitat.
+Publica a MQTT cada 3 segons com a números simples (sense JSON).
 """
 
 import paho.mqtt.client as mqtt
@@ -510,7 +510,8 @@ import random
 
 BROKER = "localhost"
 PORT = 1883
-TOPIC = "NomAlumne/aula_1/temperatura"
+TOPIC_TEMP = "NomAlumne/aula_1/temperatura"
+TOPIC_HUM = "NomAlumne/aula_1/humitat"
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -524,14 +525,20 @@ client.on_connect = on_connect
 client.connect(BROKER, PORT, 60)
 client.loop_start()
 
-print("🌡️  Simulador de temperatura en marxa...")
+print("🌡️💧 Simulador de sensors en marxa...")
 print("Prem Ctrl+C per aturar")
 
 try:
     while True:
         temperatura = round(random.uniform(18.0, 35.0), 1)
-        client.publish(TOPIC, str(temperatura))
-        print(f"📤 {TOPIC} → {temperatura}")
+        humitat = round(random.uniform(40.0, 90.0), 1)
+
+        client.publish(TOPIC_TEMP, str(temperatura))
+        client.publish(TOPIC_HUM, str(humitat))
+
+        print(f"📤 {TOPIC_TEMP} → {temperatura}")
+        print(f"📤 {TOPIC_HUM}      → {humitat}%")
+
         time.sleep(3)
 
 except KeyboardInterrupt:
@@ -558,13 +565,38 @@ Hauries de veure:
 
 ```
 ✅ Connectat al broker localhost:1883
-🌡️  Simulador de temperatura en marxa...
+🌡️💧 Simulador de sensors en marxa...
 📤 NomAlumne/aula_1/temperatura → 25.3
+📤 NomAlumne/aula_1/humitat      → 62.8%
 📤 NomAlumne/aula_1/temperatura → 24.7
+📤 NomAlumne/aula_1/humitat      → 65.1%
 ...
 ```
 
-Ara ves al dashboard de Node-RED (`http://<IP>:1880/ui`) — veuràs com es mouen els gauges! 🎉
+Ara ves al dashboard de Node-RED (`http://<IP>:1880/ui`) — veuràs com es mou el gauge de temperatura! 🎉
+
+Atura el publisher amb `Ctrl+C`.
+
+---
+
+## Exercici: afegeix un gauge d'humitat
+
+El publisher ja envia **humitat** al topic `NomAlumne/aula_1/humitat`. Ara l'alumne ha de crear un segon gauge al Node-RED.
+
+**Repte:** Fes el mateix que amb la temperatura, però per a la humitat:
+
+1. **📡 MQTT Input** — topic `NomAlumne/aula_1/humitat`
+2. **📊 UI Gauge** — connectat al MQTT input anterior
+3. Configura'l:
+   - **Tab**: selecciona `Aula 1` (el mateix que la temperatura)
+   - **Group**: afegeix un grup nou (`Sensors` o crea'n un de nou `Sensors humitat`)
+   - **Label**: `Humitat`
+   - **Range**: min = `0`, max = `100`
+4. **Deploy**
+
+**Ajuda:** el gauge d'humitat ha de tenir rang 0–100 (percentatge). Pots posar-lo al costat del de temperatura o sota.
+
+Obre el dashboard (`/ui`) i executa el publisher — hauries de veure dos gauges movent-se! 🎉
 
 Atura el publisher amb `Ctrl+C`.
 
@@ -572,10 +604,12 @@ Atura el publisher amb `Ctrl+C`.
 
 ## 🎯 Tot funcionant!
 
-Ara tens el sistema IoT complet:
+El publisher ja envia temperatura **i** humitat. Al dashboard hauries de veure **dos gauges**:
 
 ```
-🌡️  Simulador (publisher.py) ──→ 📡 Mosquitto (MQTT) ──→ 📊 Node-RED Dashboard
+🌡️  publisher.py ──→ 📡 Mosquitto ──→ 📊 Node-RED Dashboard
+                                            ├── 🌡️ Temperatura
+                                            └── 💧 Humitat
 ```
 
 Per veure-ho en acció:
@@ -587,9 +621,7 @@ Per veure-ho en acció:
    python3 publisher.py
    ```
 
-L'agulla del gauge es mourà sola cada 3 segons! 🎉
-
-Atura el publisher amb `Ctrl+C`.
+Els dos gauges es mouran sols cada 3 segons! 🎉
 
 ---
 
