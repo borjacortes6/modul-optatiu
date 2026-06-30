@@ -346,57 +346,38 @@ Hauries de veure un missatge verd: *"Data source is working"* ✅
 
 1. Al menú esquerre, ves a **Dashboards**
 2. Clica **New** → **New Dashboard**
-3. Clica **Add visualization** (o el botó **+ Add** / **Add panel** que aparegui)
+3. Clica **Add visualization** (al centre de la pantalla)
+4. Selecciona **InfluxDB** com a **Data source**
 
-   > Per defecte surt **Time Series** — si no, selecciona **Time Series** al desplegable de tipus de visualització (dalt a la dreta).
+   > ✅ Per defecte surt **Time Series**. Si no, al panell de la **dreta** ves a **All visualization** → selecciona **Time Series**.
 
-4. Al panell de la dreta, selecciona:
-   - **Data source**: `InfluxDB` (el que acabes de crear)
+5. Al panell de la **dreta**, a **Query**, selecciona **Flux** i escriu **tot seguit** (sense intros):
 
-> ⚠️ **Grafana v13:** Si no veus el botó **Add visualization**, busca un **+** a la barra superior o clica **Add** → **Visualization**.
+   ```flux
+   from(bucket: "sensors") |> range(start: v.timeRangeStart, stop: v.timeRangeStop) |> filter(fn: (r) => r._measurement == "temperatura")
+   ```
 
-**Query Language:** selecciona **Flux**
+6. Configura l'escala i unitats:
+   - **Unit**: escriu "celsius" i selecciona
+   - **Min**: `0`
+   - **Max**: `50`
 
-Al quadre de text de la query, escriu **cada línia per separat** (pitja Enter després de cada `|>`):
+7. **Title**: `Temperatura Aula`
 
-```flux
-from(bucket: "sensors")
-  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
-  |> filter(fn: (r) => r._measurement == "temperatura")
-```
+8. Clica **← Back to dashboard** (fletxa a dalt esquerra)
 
-> ⚠️ **Important:** Cada `|>` va en una **línia nova**. No ho posis tot seguit!
+9. **Save** (📁) → Nom: `Sensors Aula 1`
 
-### 7.3 Configurar el panell
 
-Un cop creada la visualització, a la **dreta** veuràs un panell amb pestanyes. A la pestanya **Field** (o **Standard options**), configura:
-
-| Camp | Valor |
-|:-----|:------|
-| **Title** | `Temperatura Aula` |
-
-Per l'escala i unitats:
-- **Unit**: selecciona `Temperature > °C` (o escriu "celsius" al cercador)
-- **Min**: `0`
-- **Max**: `50`
-
-> ⚠️ A la v13 de Grafana, aquestes opcions poden estar a **Field** → **Standard options** o al desplegable **Unit**. Si no veus "Min/Max", deixa-ho per defecte — el gràfic s'ajustarà automàticament.
-
-### 7.4 Tornar al dashboard
-
-Clica **Back to dashboard** (fletxa a dalt a l'esquerra).
-
-### 7.5 Afegir panell d'humitat
+### Afegir panell d'humitat
 
 1. Clica **Add** → **Visualization**
 2. Selecciona `InfluxDB`
-3. Query:
+3. Query (Flux, tot seguit):
 
-```flux
-from(bucket: "sensors")
-  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
-  |> filter(fn: (r) => r._measurement == "humitat")
-```
+   ```flux
+   from(bucket: "sensors") |> range(start: v.timeRangeStart, stop: v.timeRangeStop) |> filter(fn: (r) => r._measurement == "humitat")
+   ```
 
 4. **Title**: `Humitat Aula`
 5. **Unit**: `Percent (0-100)` (o escriu "percent")
