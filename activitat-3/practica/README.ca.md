@@ -419,10 +419,10 @@ http://localhost:1880/ui
 Arrossega aquests nodes a l'editor i connecta'ls:
 
 ```
-┌──────────┐    ┌─────────────────────┐
-│ 📡 mqtt   │───→│ 📊 ui_gauge         │
-│ in        │    │ (temperatura aula)  │
-└──────────┘    └─────────────────────┘
+┌──────────┐    ┌──────────┐    ┌─────────────────────┐
+│ 📡 mqtt   │───→│ 🔧 funció │───→│ 📊 ui_gauge         │
+│ in        │    │          │    │ (temperatura aula)  │
+└──────────┘    └──────────┘    └─────────────────────┘
 ```
 
 **Pas a pas:**
@@ -437,14 +437,24 @@ Arrossega aquests nodes a l'editor i connecta'ls:
    - Clica **Add**
    - Al camp **Topic** posa: `NomAlumne/aula_1/temperatura`
    - **Name**: `Temperatura Aula`
-   - Al camp **Output** selecciona: **a parsed JSON Object**
+   - **Output**: **a parsed JSON Object**
    - Clica **Done**
 
 > ⚠️ **No posis `localhost`!** Node-RED i Mosquitto estan a contenidors diferents. `mqtt-broker` és el nom del contenidor de Mosquitto — Docker el resol automàticament.
 
-2. **📊 UI Gauge — Configura'l pas a pas:**
+2. **🔧 Function node** (per extreure el valor del JSON):
+   - Arrossega'l al canvas i **connecta'l** al node MQTT
+   - Dona-li **doble clic**
+   - Al camp **On Message** escriu:
+     ```javascript
+     msg.payload = msg.payload.valor;
+     return msg;
+     ```
+   - Clica **Done**
 
-   - Arrossega'l al canvas i **connecta'l** al node MQTT (fes un cable entre els dos)
+3. **📊 UI Gauge — Configura'l pas a pas:**
+
+   - Arrossega'l al canvas i **connecta'l** al function node (fes un cable entre els dos)
    - Dona-li **doble clic**
 
    **Per crear la pestanya (Tab):**
@@ -500,8 +510,8 @@ nano ~/activitat-3/scripts/publisher.py
 ```python
 #!/usr/bin/env python3
 """
-Simulador de sensor IoT.
-Publica temperatura, humitat i pressió a MQTT cada 5 segons.
+Simulador de sensor de temperatura.
+Publica temperatura a MQTT cada 5 segons en format JSON.
 """
 
 import paho.mqtt.client as mqtt
@@ -511,9 +521,7 @@ import json
 
 BROKER = "localhost"
 PORT = 1883
-TOPIC_TEMP = "NomAlumne/aula_1/temperatura"
-TOPIC_HUM = "NomAlumne/aula_1/humitat"
-TOPIC_PRES = "NomAlumne/aula_1/pressio"
+TOPIC = "NomAlumne/aula_1/temperatura"
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -527,32 +535,16 @@ client.on_connect = on_connect
 client.connect(BROKER, PORT, 60)
 client.loop_start()
 
-print("🌡️  Simulador de sensors en marxa...")
+print("🌡️  Simulador de temperatura en marxa...")
 print("Prem Ctrl+C per aturar")
 
 try:
     while True:
-        temperatura = round(random.uniform(18.0, 32.0), 1)
-        humitat = round(random.uniform(40.0, 80.0), 1)
-        pressio = round(random.uniform(1000.0, 1030.0), 1)
-
-        # Publicar temperatura
-        payload = json.dumps({"valor": temperatura, "unitat": "°C"})
-        client.publish(TOPIC_TEMP, payload)
-        print(f"📤 {TOPIC_TEMP} → {payload}")
-
-        # Publicar humitat
-        payload = json.dumps({"valor": humitat, "unitat": "%"})
-        client.publish(TOPIC_HUM, payload)
-        print(f"📤 {TOPIC_HUM} → {payload}")
-
-        # Publicar pressió
-        payload = json.dumps({"valor": pressio, "unitat": "hPa"})
-        client.publish(TOPIC_PRES, payload)
-        print(f"📤 {TOPIC_PRES} → {payload}")
-
-        print("---")
-        time.sleep(5)
+        temperatura = round(random.uniform(18.0, 35.0), 1)
+        payload = json.dumps({"valor": temperatura})
+        client.publish(TOPIC, payload)
+        print(f"📤 {TOPIC} → {payload}")
+        time.sleep(3)
 
 except KeyboardInterrupt:
     print("\n⏹️  Aturat per l'usuari")
@@ -578,12 +570,9 @@ Hauries de veure:
 
 ```
 ✅ Connectat al broker localhost:1883
-🌡️  Simulador de sensors en marxa...
-📤 NomAlumne/aula_1/temperatura → {"valor": 25.3, "unitat": "\u00b0C"}
-📤 NomAlumne/aula_1/humitat → {"valor": 62.8, "unitat": "%"}
-📤 NomAlumne/aula_1/pressio → {"valor": 1015.2, "unitat": "hPa"}
----
-📤 NomAlumne/aula_1/temperatura → {"valor": 24.7, "unitat": "\u00b0C"}
+🌡️  Simulador de temperatura en marxa...
+📤 NomAlumne/aula_1/temperatura → {"valor": 25.3}
+📤 NomAlumne/aula_1/temperatura → {"valor": 24.7}
 ...
 ```
 
