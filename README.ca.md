@@ -10,7 +10,8 @@ Activitats d'aprofundiment en eines professionals per a IoT, sistemes encastats 
 |:--|:----------|:---------|
 | 1 | 🖥️ **Crear un entorn virtual** — VirtualBox + Ubuntu Linux | Fet |
 | 2 | 🐳 **Instal·lació de Docker i eines IoT** — Docker, Compose, Python, MQTT | Fet |
-| 3 | 🚀 **Primers contenidors IoT** — Mosquitto + Node-RED + Python MQTT | ✅ Nova |
+| 3 | 🚀 **Primers contenidors IoT** — Mosquitto + Node-RED + Python MQTT | Fet |
+| 4 | 🗄️ **Emmagatzematge i visualització** — InfluxDB + Grafana | ✅ Nova |
 
 ---
 
