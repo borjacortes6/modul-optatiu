@@ -212,8 +212,8 @@ Abans de començar, recorda els conceptes bàsics:
 │          │                              │               │
 │  ┌───────┴───────┐            ┌─────────┴────────┐     │
 │  │  📤 Publisher  │            │  📥 Subscriber    │     │
+│  │  Terminal 1    │            │  Terminal 2      │     │
 │  │  Envia dades   │            │  Rep dades        │     │
-│  │  (tu)          │            │  (tu o Node-RED)  │     │
 │  └───────────────┘            └──────────────────┘     │
 │                                                         │
 └───────────────────────────────────────────────────────┘
