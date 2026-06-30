@@ -354,13 +354,15 @@ Hauries de veure un missatge verd: *"Data source is working"* ✅
 
 **Query Language:** selecciona **Flux**
 
-Al quadre de text de la query, escriu:
+Al quadre de text de la query, escriu **cada línia per separat** (pitja Enter després de cada `|>`):
 
 ```flux
 from(bucket: "sensors")
-  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
-  |> filter(fn: (r) => r._measurement == "temperatura")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r._measurement == "temperatura")
 ```
+
+> ⚠️ **Important:** Cada `|>` va en una **línia nova**. No ho posis tot seguit!
 
 ### 7.3 Configurar el panell
 
@@ -392,8 +394,8 @@ Clica **Back to dashboard** (fletxa a dalt a l'esquerra).
 
 ```flux
 from(bucket: "sensors")
-  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
-  |> filter(fn: (r) => r._measurement == "humitat")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r._measurement == "humitat")
 ```
 
 4. **Title**: `Humitat Aula`
