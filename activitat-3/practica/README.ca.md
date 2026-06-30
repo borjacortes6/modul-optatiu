@@ -342,6 +342,22 @@ Pistes:
 - Publica 3 valors diferents d'humitat
 - Fes una captura amb `-v` per veure topic + valor
 
+<details>
+<summary>📝 Solució (mira després d'intentar-ho)</summary>
+
+Terminal 2:
+```bash
+mosquitto_sub -h localhost -t "NomAlumne/aula_1/humitat" -v
+```
+
+Terminal 1:
+```bash
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/humitat" -m "45"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/humitat" -m "62"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/humitat" -m "78"
+```
+</details>
+
 📝 *Al informe: captura mostrant les 3 lectures d'humitat rebudes.*
 
 ---
