@@ -570,129 +570,26 @@ Atura el publisher amb `Ctrl+C`.
 
 ---
 
-## 7️⃣ Python subscriber — receptor de dades
+## 🎯 Tot funcionant!
 
-Crea un script que es subscrigui i mostri les dades:
+Ara tens el sistema IoT complet:
 
-```bash
-nano ~/activitat-3/scripts/subscriber.py
+```
+🌡️  Simulador (publisher.py) ──→ 📡 Mosquitto (MQTT) ──→ 📊 Node-RED Dashboard
 ```
 
-```python
-#!/usr/bin/env python3
-"""
-Subscriptor MQTT.
-S'espera a rebre dades i les mostra en temps real.
-"""
+Per veure-ho en acció:
 
-import paho.mqtt.client as mqtt
-import json
+1. Obre el dashboard: `http://localhost:1880/ui`
+2. Executa el publisher:
+   ```bash
+   cd ~/activitat-3
+   python3 publisher.py
+   ```
 
-BROKER = "localhost"
-PORT = 1883
-TOPIC = "NomAlumne/#"
+L'agulla del gauge es mourà sola cada 3 segons! 🎉
 
-def on_message(client, userdata, msg):
-    topic = msg.topic
-    try:
-        payload = json.loads(msg.payload.decode())
-        print(f"📩 [{topic}] {payload}")
-    except (json.JSONDecodeError, UnicodeDecodeError):
-        print(f"📩 [{topic}] {msg.payload.decode()}")
-
-def on_connect(client, userdata, flags, rc):
-    if rc == 0:
-        print(f"✅ Subscrit a '{TOPIC}'")
-        print(f"📡 Esperant dades... (Ctrl+C per aturar)")
-        print("---")
-    else:
-        print(f"❌ Error de connexió. Codi: {rc}")
-
-client = mqtt.Client()
-client.on_connect = on_connect
-client.on_message = on_message
-
-client.connect(BROKER, PORT, 60)
-client.subscribe(TOPIC)
-
-client.loop_forever()
-```
-
-Guarda i surt. Dona-li permisos:
-
-```bash
-chmod +x ~/activitat-3/scripts/subscriber.py
-```
-
-### Executa'l al costat del publisher
-
-Obre **dos terminals** a la VM:
-
-**Terminal 1 — Subscriptor:**
-```bash
-python3 ~/activitat-3/scripts/subscriber.py
-```
-
-**Terminal 2 — Publisher:**
-```bash
-python3 ~/activitat-3/scripts/publisher.py
-```
-
-Al terminal 1 veuràs:
-```
-✅ Subscrit a 'NomAlumne/#'
-📡 Esperant dades... (Ctrl+C per aturar)
----
-📩 [NomAlumne/aula_1/temperatura] 25.3
-📩 [NomAlumne/aula_1/temperatura] 24.7
-📩 [NomAlumne/aula_1/temperatura] 26.8
-```
-
-**Tot connectat!** Sensor (publisher) → Broker → Dashboard + Subscriptor ✅
-
-Atura tots dos amb `Ctrl+C`.
-
----
-
-## 8️⃣ Bateria de proves
-
-Executa tot d'un cop per verificar que funciona:
-
-```bash
-echo "=== 📡 Prova MQTT (docker) ==="
-docker exec mqtt-broker mosquitto_sub -h localhost -t "test" -C 1 &
-DOCKER_PID=$!
-sleep 1
-docker exec mqtt-broker mosquitto_pub -h localhost -t "test" -m "hola mon"
-wait $DOCKER_PID 2>/dev/null
-echo "✅ MQTT dins del contenidor funciona"
-echo ""
-
-echo "=== 🟠 Prova Node-RED ==="
-curl -s -o /dev/null -w "HTTP %{http_code}" http://localhost:1880
-echo "  →  Node-RED respon"
-echo ""
-
-echo "=== 🐳 Estat dels contenidors ==="
-docker compose ps --format "table {{.Name}}\t{{.Status}}"
-echo ""
-
-echo "=== 🐍 Prova scripts Python ==="
-python3 -c "
-import paho.mqtt.client as mqtt
-import json
-# Prova de publicació/subscripció
-pub = mqtt.Client()
-pub.connect('localhost', 1883, 60)
-pub.publish('NomAlumne/prova', json.dumps({'test': True}))
-print('✅ Publicació OK')
-# Tot correcte
-print('✅ Scripts preparats')
-"
-echo ""
-
-echo "=== 🎯 Tot correcte! ==="
-```
+Atura el publisher amb `Ctrl+C`.
 
 ---
 
@@ -701,14 +598,11 @@ echo "=== 🎯 Tot correcte! ==="
 - [ ] **1** He creat `docker-compose.yml` amb Mosquitto + Node-RED
 - [ ] **2** He creat el fitxer de configuració de Mosquitto
 - [ ] **3** `docker compose up -d` engega els dos contenidors ✅
-- [ ] **4** `docker compose ps` mostra `Up` per als dos serveis ✅
-- [ ] **5** Puc publicar i subscriure'm a MQTT des del terminal ✅
-- [ ] **6** Accedeixo a Node-RED al navegador (`http://<IP>:1880`) ✅
-- [ ] **7** He creat un flow amb MQTT in + json + gauge ✅
-- [ ] **8** El dashboard mostra dades en temps real (`/ui`) ✅
-- [ ] **9** `publisher.py` publica dades sense errors ✅
-- [ ] **10** `subscriber.py` rep les dades correctament ✅
-- [ ] **11** La bateria de proves final dona tot correcte ✅
+- [ ] **4** Puc publicar i subscriure'm a MQTT des del terminal ✅
+- [ ] **5** Accedeixo a Node-RED al navegador (`http://<IP>:1880`) ✅
+- [ ] **6** He creat un flow amb MQTT in + gauge ✅
+- [ ] **7** El dashboard mostra dades en temps real (`/ui`) ✅
+- [ ] **8** `publisher.py` publica dades sense errors ✅
 
 **🎉 Enhorabona! Has creat el teu primer sistema IoT amb contenidors Docker!**
 
