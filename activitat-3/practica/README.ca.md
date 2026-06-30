@@ -53,7 +53,20 @@ cd activitat-3
 
 ---
 
-## 2️⃣ Crea el fitxer docker-compose.yml
+## 2️⃣ Crea el docker-compose.yml
+
+Ara escriurem un fitxer que descriu els serveis (contenidors) que volem engegar. Per què crearem directoris?
+
+| Directori | Per què? |
+|:----------|:---------|
+| `./mosquitto/config/` | 🔧 **El configurem** — hi poses `mosquitto.conf` personalitzat |
+| `./mosquitto/data/` | 💾 **Persistència** — si el contenidor es reinicia, les dades no es perden |
+| `./mosquitto/log/` | 📋 **Logs** — errors i esdeveniments visibles encara que esborris el contenidor |
+| `./nodered/data/` | 🔴 **Crític** — sense això, **perds els flows** de Node-RED cada cop que fas `docker compose down` |
+
+Els directoris `data`, `log` i `nodered/data` els crea Docker automàticament. El `config` l'has de crear tu per posar-hi el fitxer de configuració.
+
+Crea el fitxer:
 
 Crea un fitxer `docker-compose.yml` amb aquest contingut:
 
@@ -99,7 +112,17 @@ Guarda el fitxer: `Ctrl+O`, `Enter`, `Ctrl+X`.
 
 ### Configura Mosquitto
 
-Mosquitto necessita un fitxer de configuració. Crea'l:
+Mosquitto necessita un fitxer de configuració per saber a quins ports escoltar i si deixa entrar a tothom:
+
+```conf
+listener 1883 0.0.0.0          ← Port MQTT normal, obert a tothom
+allow_anonymous true           ← Sense contrasenya (per a classe)
+listener 9001 0.0.0.0          ← Port extra per WebSocket (el farà servir
+protocol websockets            ← Node-RED per connectar-se des del navegador)
+allow_anonymous true
+```
+
+Crea'l:
 
 ```bash
 mkdir -p mosquitto/config
