@@ -193,6 +193,11 @@ docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 
 ## 4️⃣ Prova MQTT
 
+Abans de començar, recorda els conceptes bàsics:
+- **Topic** — un canal on es publiquen missatges (ex: `casa/sala/temperatura`)
+- **Publicar** — enviar un missatge a un topic (com un *tweet*)
+- **Subscriure's** — escoltar un topic per rebre'n els missatges (com *seguir* un tema)
+
 ### Instal·la un client MQTT per al terminal:
 
 ```bash
