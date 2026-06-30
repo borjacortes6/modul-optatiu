@@ -322,12 +322,14 @@ Atura el subscriptor anterior amb `Ctrl+C` i prova:
 ```bash
 mosquitto_sub -h localhost -t "+/aula_1/temperatura"
 ```
-Des del terminal 1, publica:
+Des del terminal 1, publica amb noms d'alumne diferents:
 ```bash
-mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "23.0"
+mosquitto_pub -h localhost -t "Joan/aula_1/temperatura" -m "22.0"
+mosquitto_pub -h localhost -t "Maria/aula_1/temperatura" -m "23.5"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "21.0"
 mosquitto_pub -h localhost -t "NomAlumne/aula_1/humitat" -m "60"
 ```
-❓ *Per què només reps la temperatura i no la humitat?* Explica-ho a l'informe.
+❓ *Per què arriben les 3 primeres però no l'última?* Explica-ho a l'informe.
 
 ---
 
