@@ -349,22 +349,24 @@ Hauries de veure un missatge verd: *"Data source is working"* ✅
 3. Clica **Add visualization** (al centre de la pantalla)
 4. Selecciona **InfluxDB** com a **Data source**
 
-   Ja veuràs que apareix un quadre de query i un panell a la dreta.
+   Ja veuràs que apareix una vista prèvia del gràfic i un panell a la **dreta**.
 
 5. ✅ Al panell de la **dreta**, ves a **All visualization** → selecciona **Time Series**
 
-6. A **Query** (panell dret), selecciona **Flux** i escriu la query **tot seguit** (sense intros, que si no no va):
+6. Al **Title** (dalt del panell dret): escriu `Temperatura Aula`
 
-   ```
-   from(bucket: "sensors") |> range(start: v.timeRangeStart, stop: v.timeRangeStop) |> filter(fn: (r) => r._measurement == "temperatura")
-   ```
-
-7. Més avall, configura:
+7. A **Standard options** (més avall al panell dret): configura
    - **Unit**: escriu "celsius" i selecciona
    - **Min**: `0`
    - **Max**: `50`
 
-8. A dalt del tot del panell dret, a **Title**: escriu `Temperatura Aula`
+8. **Al final del tot del panell dret** (a la part de baix), a **Query**:
+   - Selecciona **Flux**
+   - Escriu la query **tot seguit** (sense intros, que si no no va):
+
+   ```
+   from(bucket: "sensors") |> range(start: v.timeRangeStart, stop: v.timeRangeStop) |> filter(fn: (r) => r._measurement == "temperatura")
+   ```
 
 9. Clica **← Back to dashboard** (fletxa a dalt esquerra)
 
@@ -375,16 +377,14 @@ Hauries de veure un missatge verd: *"Data source is working"* ✅
 
 1. Clica **Add** → **Visualization**
 2. Selecciona `InfluxDB`
-3. ✅ Al panell de la **dreta**, **All visualization** → selecciona **Time Series**
-4. A **Query** (Flux, **tot seguit** — sense intros):
+3. ✅ **All visualization** → **Time Series**
+4. **Title**: `Humitat Aula`
+5. **Unit**: `Percent (0-100)` (o escriu "percent"), **Min**: `0`, **Max**: `100`
+6. **Al final del panell dret**, a **Query** (Flux, **tot seguit**):
 
    ```
    from(bucket: "sensors") |> range(start: v.timeRangeStart, stop: v.timeRangeStop) |> filter(fn: (r) => r._measurement == "humitat")
    ```
-
-5. **Title**: `Humitat Aula`
-6. **Unit**: `Percent (0-100)` (o escriu "percent")
-7. **Min**: `0`, **Max**: `100`
 
 ### 7.6 Desar el dashboard
 
