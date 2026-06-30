@@ -270,6 +270,29 @@ Al segon terminal veuràs tots els missatges perquè s'ha subscrit a `casa/#`.
 
 ---
 
+### 📖 Resum: comodins MQTT
+
+Els topics MQTT funcionen com carpetes. Pots usar comodins per subscriure't a més d'un alhora:
+
+| Patró | Què captura | Exemple |
+|:------|:-----------|:--------|
+| `NomAlumne/#` | **Tot** el que pengi de `NomAlumne/` | `NomAlumne/aula_1/temperatura` ✅ |
+| | | `NomAlumne/aula_1/humitat` ✅ |
+| | | `NomAlumne/exterior/temperatura` ✅ |
+| `NomAlumne/aula_1/+` | Només un nivell sota `aula_1/` | `NomAlumne/aula_1/temperatura` ✅ |
+| | | `NomAlumne/aula_1/humitat` ✅ |
+| | | `NomAlumne/aula_1/sala/temperatura` ❌ |
+| `+/aula_1/temperatura` | Temperatura de qualsevol alumne | `Joan/aula_1/temperatura` ✅ |
+| | | `Maria/aula_1/temperatura` ✅ |
+| | | `Joan/aula_1/humitat` ❌ |
+
+- **`#`** → comodí de **multi-nivell** (ho agafa tot cap avall)
+- **`+`** → comodí de **un sol nivell** (substitueix una carpeta)
+
+Ara fes els exercicis:
+
+---
+
 ### ✍️ Exercicis
 
 Documenta al teu informe tot el que fas.
