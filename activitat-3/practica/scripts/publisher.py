@@ -37,7 +37,7 @@ try:
         client.publish(TOPIC_HUM, str(humitat))
 
         print(f"📤 {TOPIC_TEMP} → {temperatura}")
-        print(f"📤 {TOPIC_HUM}      → {humitat}%")
+        print(f"📤 {TOPIC_HUM}      → {humitat}")
 
         time.sleep(3)
 

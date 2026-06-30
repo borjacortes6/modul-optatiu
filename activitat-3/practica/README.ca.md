@@ -567,9 +567,9 @@ Hauries de veure:
 ✅ Connectat al broker localhost:1883
 🌡️💧 Simulador de sensors en marxa...
 📤 NomAlumne/aula_1/temperatura → 25.3
-📤 NomAlumne/aula_1/humitat      → 62.8%
+📤 NomAlumne/aula_1/humitat      → 62.8
 📤 NomAlumne/aula_1/temperatura → 24.7
-📤 NomAlumne/aula_1/humitat      → 65.1%
+📤 NomAlumne/aula_1/humitat      → 65.1
 ...
 ```
 
