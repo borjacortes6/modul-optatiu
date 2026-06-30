@@ -346,14 +346,13 @@ Hauries de veure un missatge verd: *"Data source is working"* ✅
 
 1. Al menú esquerre, ves a **Dashboards**
 2. Clica **New** → **New Dashboard**
-3. Clica **Add visualization**
+3. Clica **Add visualization** (o el botó **+ Add** / **Add panel** que aparegui)
+4. Al panell de la dreta, selecciona:
+   - **Data source**: `InfluxDB` (el que acabes de crear)
 
-Al panell de la dreta, selecciona:
+> ⚠️ **Grafana v13:** Si no veus el botó **Add visualization**, busca un **+** a la barra superior o clica **Add** → **Visualization**.
 
-| Camp | Valor |
-|:-----|:------|
-| **Data source** | `InfluxDB` (el que acabes de crear) |
-| **Query** | Selecciona **Flux** |
+**Query Language:** selecciona **Flux**
 
 Al quadre de text de la query, escriu:
 
