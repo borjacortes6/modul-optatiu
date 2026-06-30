@@ -268,13 +268,13 @@ Al segon terminal veuràs tots els missatges perquè s'ha subscrit a `casa/#`.
 
 Documenta al teu informe tot el que fas.
 
-**1. Subscriu-te al topic `Borja/#`:**
+**1. Subscriu-te al topic `NomAlumne/#`:**
 ```bash
-mosquitto_sub -h localhost -t "Borja/#"
+mosquitto_sub -h localhost -t "NomAlumne/#"
 ```
 Des del terminal 1, publica un valor de temperatura:
 ```bash
-mosquitto_pub -h localhost -t "Borja/aula_1/temperatura" -m "22.5"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "22.5"
 ```
 📝 *Al informe: captura mostrant que el valor arriba al subscriptor.*
 
@@ -282,9 +282,9 @@ mosquitto_pub -h localhost -t "Borja/aula_1/temperatura" -m "22.5"
 
 **2. Publica un valor d'humitat:**
 ```bash
-mosquitto_pub -h localhost -t "Borja/aula_1/humitat" -m "58"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/humitat" -m "58"
 ```
-📝 *Al informe: comprova que arriba al terminal 2 (subscrit a `Borja/#`).*
+📝 *Al informe: comprova que arriba al terminal 2 (subscrit a `NomAlumne/#`).*
 
 ---
 
@@ -295,8 +295,8 @@ mosquitto_sub -h localhost -t "+/aula_1/temperatura"
 ```
 Des del terminal 1, publica:
 ```bash
-mosquitto_pub -h localhost -t "Borja/aula_1/temperatura" -m "23.0"
-mosquitto_pub -h localhost -t "Borja/aula_1/humitat" -m "60"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "23.0"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/humitat" -m "60"
 ```
 ❓ *Per què només reps la temperatura i no la humitat?* Explica-ho a l'informe.
 
@@ -304,9 +304,9 @@ mosquitto_pub -h localhost -t "Borja/aula_1/humitat" -m "60"
 
 **4. Publica 3 lectures seguides:**
 ```bash
-mosquitto_pub -h localhost -t "Borja/aula_1/temperatura" -m "21.0"
-mosquitto_pub -h localhost -t "Borja/aula_1/temperatura" -m "21.5"
-mosquitto_pub -h localhost -t "Borja/aula_1/temperatura" -m "22.0"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "21.0"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "21.5"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "22.0"
 ```
 📝 *Al informe: mostra les tres lectures rebudes al subscriptor.*
 
