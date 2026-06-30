@@ -419,10 +419,10 @@ http://localhost:1880/ui
 Arrossega aquests nodes a l'editor i connecta'ls:
 
 ```
-┌──────────┐    ┌──────────┐    ┌─────────────────────┐
-│ 📡 mqtt   │───→│ 🔧 json  │───→│ 📊 ui_gauge         │
-│ in        │    │          │    │ (temperatura sala)  │
-└──────────┘    └──────────┘    └─────────────────────┘
+┌──────────┐    ┌─────────────────────┐
+│ 📡 mqtt   │───→│ 📊 ui_gauge         │
+│ in        │    │ (temperatura aula)  │
+└──────────┘    └─────────────────────┘
 ```
 
 **Pas a pas:**
@@ -437,24 +437,20 @@ Arrossega aquests nodes a l'editor i connecta'ls:
    - Clica **Add**
    - Al camp **Topic** posa: `NomAlumne/aula_1/temperatura`
    - **Name**: `Temperatura Aula`
+   - Al camp **Output** selecciona: **a parsed JSON Object**
    - Clica **Done**
 
 > ⚠️ **No posis `localhost`!** Node-RED i Mosquitto estan a contenidors diferents. `mqtt-broker` és el nom del contenidor de Mosquitto — Docker el resol automàticament.
 
-2. **🔧 JSON**:
-   - Busca `json` i arrossega'l
-   - Action: **Always convert to JSON object**
-   - Connecta'l al node MQTT
-
-3. **📊 UI Gauge** (del dashboard):
+2. **📊 UI Gauge** (del dashboard):
    - Busca `ui_gauge` a la paleta
    - Group: **Add new ui_group...** → **Add new ui_tab**
    - Name: `Temperatura`
    - Label: `Aula 1`
    - Range: min `0`, max `50`
-   - Connecta'l al node JSON
+   - Connecta'l al node MQTT
 
-4. **Desplega**: Clica el botó **Deploy** (blau, dalt a la dreta)
+### Desplega
 
 ### Mira el dashboard!
 
