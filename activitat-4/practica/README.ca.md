@@ -347,6 +347,9 @@ Hauries de veure un missatge verd: *"Data source is working"* ✅
 1. Al menú esquerre, ves a **Dashboards**
 2. Clica **New** → **New Dashboard**
 3. Clica **Add visualization** (o el botó **+ Add** / **Add panel** que aparegui)
+
+   > Per defecte surt **Time Series** — si no, selecciona **Time Series** al desplegable de tipus de visualització (dalt a la dreta).
+
 4. Al panell de la dreta, selecciona:
    - **Data source**: `InfluxDB` (el que acabes de crear)
 
