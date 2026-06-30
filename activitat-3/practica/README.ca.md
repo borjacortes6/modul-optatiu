@@ -400,29 +400,19 @@ curl -s -o /dev/null -w "HTTP %{http_code}" http://localhost:1880
 
 Si veus `HTTP 200` → ✅ Node-RED funciona.
 
-### Accedeix a Node-RED des de l'amfitrió
+### Accedeix a Node-RED des del navegador de la VM
 
-Per obrir l'editor i el dashboard al navegador, necessites la IP de la VM en mode **Bridge**:
-
-```bash
-hostname -I
-```
-
-Exemple de sortida: `192.168.1.42`
-
-Des del navegador del teu Windows/macOS:
+Obre el **Firefox** de la VM i ves a:
 
 ```
-http://192.168.1.42:1880
+http://localhost:1880
 ```
 
 I el dashboard a:
 
 ```
-http://192.168.1.42:1880/ui
+http://localhost:1880/ui
 ```
-
-> 💡 Si la VM està en mode NAT, l'acces des de l'amfitrió no funciona. Consulta el professor per canviar a Bridge o per fer servir un túnel SSH.
 
 ### Crea el teu primer flow
 
