@@ -202,7 +202,7 @@ sudo apt install -y mosquitto-clients
 ### Subscriu-te a un topic (obre un **segon terminal**):
 
 ```bash
-mosquitto_sub -h localhost -t "casa/#
+mosquitto_sub -h localhost -t "casa/#"
 ```
 
 Aquest terminal es quedarà escoltant. Torna al primer terminal.
