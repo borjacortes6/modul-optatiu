@@ -366,21 +366,18 @@ from(bucket: "sensors")
 
 ### 7.3 Configurar el panell
 
-Al panell de la dreta (sota **Panel options**):
+Un cop creada la visualització, a la **dreta** veuràs un panell amb pestanyes. A la pestanya **Field** (o **Standard options**), configura:
 
 | Camp | Valor |
 |:-----|:------|
 | **Title** | `Temperatura Aula` |
-| **Description** | `Evolució de la temperatura` |
 
-A **Standard options**:
-| Camp | Valor |
-|:-----|:------|
-| **Unit** | `Temperature (°C)` (o `None` si no apareix) |
-| **Min** | `0` |
-| **Max** | `50` |
+Per l'escala i unitats:
+- **Unit**: selecciona `Temperature > °C` (o escriu "celsius" al cercador)
+- **Min**: `0`
+- **Max**: `50`
 
-A **Legend**: activa **Visibility** (per veure els valors al costat).
+> ⚠️ A la v13 de Grafana, aquestes opcions poden estar a **Field** → **Standard options** o al desplegable **Unit**. Si no veus "Min/Max", deixa-ho per defecte — el gràfic s'ajustarà automàticament.
 
 ### 7.4 Tornar al dashboard
 
@@ -399,7 +396,7 @@ from(bucket: "sensors")
 ```
 
 4. **Title**: `Humitat Aula`
-5. **Unit**: `Percent (0-100)`
+5. **Unit**: `Percent (0-100)` (o escriu "percent")
 6. **Min**: `0`, **Max**: `100`
 
 ### 7.6 Desar el dashboard
