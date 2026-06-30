@@ -163,21 +163,31 @@ Hauries de veure:
 ### Verifica que estan en marxa:
 
 ```bash
-docker compose ps
+docker ps
 ```
+
+*(Funciona des de qualsevol directori)*
 
 Hauries de veure:
 
 ```
-NAME                IMAGE                       STATUS         PORTS
-mqtt-broker         eclipse-mosquitto:2         Up 1 minute    0.0.0.0:1883->1883/tcp
-nodered-dashboard   nodered/node-red:4.0       Up 1 minute    0.0.0.0:1880->1880/tcp
+CONTAINER ID   IMAGE                    ...   NAMES
+abc123def456   nodered/node-red:4.0     ...   nodered-dashboard
+def456abc123   eclipse-mosquitto:2      ...   mqtt-broker
+```
+
+Si vols veure-hi ports i estat de forma més clara:
+
+```bash
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 ```
 
 | Columna | Què significa |
 |:--------|:-------------|
 | `Up 1 minute` | Funciona des de fa 1 minut ✅ |
 | `0.0.0.0:1883->1883/tcp` | Port 1883 obert a totes les IPs |
+
+> 💡 **Alternativa:** `docker compose ps` fa el mateix, però només des de la carpeta `~/activitat-3/`
 
 ### Mira els logs (si alguna cosa va malament):
 
