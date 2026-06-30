@@ -258,6 +258,12 @@ mosquitto_pub -h localhost -t "casa/exterior/temperatura" -m "18.2"
 
 Al segon terminal veuràs tots els missatges perquè s'ha subscrit a `casa/#`.
 
+> 💡 **Consell:** Si afegeixes `-v` al subscriptor, veuràs el topic i el valor junts:
+> ```bash
+> mosquitto_sub -h localhost -t "casa/#" -v
+> ```
+> Sortida: `casa/sala/temperatura 23.5`
+
 **Atura el subscriptor** amb `Ctrl+C`.
 
 > 🎉 **MQTT funciona!**
