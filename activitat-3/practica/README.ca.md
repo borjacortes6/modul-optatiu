@@ -189,19 +189,9 @@ docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
 
 > 💡 **Alternativa:** `docker compose ps` fa el mateix, però només des de la carpeta `~/activitat-3/`
 
-### Mira els logs (si alguna cosa va malament):
-
-```bash
-docker compose logs
-```
-
-> 💡 Per veure només un servei: `docker compose logs mosquitto`
-
-### Atura els logs (Ctrl+C) i torna al terminal.
-
 ---
 
-## 4️⃣ Prova MQTT des del terminal
+## 4️⃣ Prova MQTT
 
 ### Instal·la un client MQTT per al terminal:
 
