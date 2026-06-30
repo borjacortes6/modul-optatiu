@@ -208,6 +208,8 @@ Ara has d'afegir un node **influxdb out** al teu flow perquè les dades es guard
 
 5. Clica **Add**
 
+> ⚠️ **Important:** Si els camps que veus són **Host, Database, Username, Password** (en lloc d'URL, Token, Organization), és que està en mode v1.x. Busca el desplegable **Version** i canvia'l a **InfluxDB v2.x** — els camps canviaran automàticament.
+
 ### Pas 2: Configurar el node influxdb out
 
 Al mateix node, configura:
