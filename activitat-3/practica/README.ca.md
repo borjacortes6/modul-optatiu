@@ -288,6 +288,7 @@ Els topics MQTT funcionen com carpetes. Pots usar comodins per subscriure't a m�
 
 - **`#`** → comodí de **multi-nivell** (ho agafa tot cap avall)
 - **`+`** → comodí de **un sol nivell** (substitueix una carpeta)
+- **`-v`** → mode **verbose** (mostra el topic + el valor, no només el valor)
 
 Ara fes els exercicis:
 
