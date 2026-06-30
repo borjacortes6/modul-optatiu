@@ -333,13 +333,16 @@ mosquitto_pub -h localhost -t "NomAlumne/aula_1/humitat" -m "60"
 
 ---
 
-**4. Publica 3 lectures seguides:**
-```bash
-mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "21.0"
-mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "21.5"
-mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "22.0"
-```
-📝 *Al informe: mostra les tres lectures rebudes al subscriptor.*
+**4. Fes-ho tu sol — humitat:**
+
+Sense mirar els exercicis anteriors, fes el mateix procés que has fet amb la temperatura, però amb **humitat**.
+
+Pistes:
+- Subscriu-te al topic d'humitat de `NomAlumne`
+- Publica 3 valors diferents d'humitat
+- Fes una captura amb `-v` per veure topic + valor
+
+📝 *Al informe: captura mostrant les 3 lectures d'humitat rebudes.*
 
 ---
 
