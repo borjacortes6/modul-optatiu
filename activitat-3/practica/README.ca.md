@@ -443,21 +443,28 @@ Arrossega aquests nodes a l'editor i connecta'ls:
 > ⚠️ **No posis `localhost`!** Node-RED i Mosquitto estan a contenidors diferents. `mqtt-broker` és el nom del contenidor de Mosquitto — Docker el resol automàticament.
 
 2. **📊 UI Gauge** (del dashboard):
-   - Busca `ui_gauge` a la paleta
-   - Group: **Add new ui_group...** → **Add new ui_tab**
-   - Name: `Temperatura`
-   - Label: `Aula 1`
-   - Range: min `0`, max `50`
-   - Connecta'l al node MQTT
+   - Arrossega'l al canvas i connecta'l al node MQTT
+   - Dona-li doble clic
+   - Al camp **Group** clica el llapis ✏️
+   - A **Tab** clica el llapis ✏️:
+     - **Name** → `Aula 1`
+     - Clica **Add** (o **Update**)
+   - **Group**: **Name** → `Sensors`
+   - Clica **Add** (o **Update**)
+   - **Label** → `Temperatura`
+   - **Range**: min `0`, max `50`
+   - Clica **Done**
 
 ### Desplega
+
+Clica el botó **Deploy** (blau, dalt a la dreta).
 
 ### Mira el dashboard!
 
 Obre una pestanya nova al navegador i ves a:
 
 ```
-http://<IP-DE-LA-VM>:1880/ui
+http://localhost:1880/ui
 ```
 
 Ara torna al terminal i publica valors de temperatura (al topic que has posat al flow):
