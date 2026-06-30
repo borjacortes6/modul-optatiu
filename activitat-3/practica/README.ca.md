@@ -461,7 +461,7 @@ Arrossega aquests nodes a l'editor i connecta'ls:
    - Clica **Add**
 
    **Configura el gauge:**
-   - **Label**: `Temperatura`
+   - **Label**: `Temperatura (ºC)`
    - **Range**: min = `0`, max = `50`
    - Clica **Done**
 
@@ -581,22 +581,28 @@ Atura el publisher amb `Ctrl+C`.
 
 ## Exercici: afegeix un gauge d'humitat
 
-El publisher ja envia **humitat** al topic `NomAlumne/aula_1/humitat`. Ara l'alumne ha de crear un segon gauge al Node-RED.
+El publisher ja envia **humitat** al topic `NomAlumne/aula_1/humitat`. Ara has de crear un segon gauge al Node-RED.
 
-**Repte:** Fes el mateix que amb la temperatura, però per a la humitat:
+Fes el mateix que amb la temperatura, però per a la humitat:
 
-1. **📡 MQTT Input** — topic `NomAlumne/aula_1/humitat`
-2. **📊 UI Gauge** — connectat al MQTT input anterior
-3. Configura'l:
-   - **Tab**: selecciona `Aula 1` (el mateix que la temperatura)
-   - **Group**: afegeix un grup nou (`Sensors` o crea'n un de nou `Sensors humitat`)
-   - **Label**: `Humitat`
+1. **📡 MQTT Input**
+   - Arrossega'l al canvas
+   - **Topic**: `NomAlumne/aula_1/humitat`
+   - **Name**: `Humitat Aula`
+   - **Output**: **a parsed JSON Object**
+   - Clica **Done**
+
+2. **📊 UI Gauge**
+   - Arrossega'l i **connecta'l** al MQTT input d'humitat
+   - Doble clic per obrir-lo
+   - **Group**: selecciona `Sensors` (el mateix de la temperatura)
+   - **Label**: `Humitat (%)`
    - **Range**: min = `0`, max = `100`
-4. **Deploy**
+   - Clica **Done**
 
-**Ajuda:** el gauge d'humitat ha de tenir rang 0–100 (percentatge). Pots posar-lo al costat del de temperatura o sota.
+3. **Deploy**
 
-Obre el dashboard (`/ui`) i executa el publisher — hauries de veure dos gauges movent-se! 🎉
+Obre el dashboard (`/ui`) i executa el publisher — hauries de veure **dos gauges** movent-se! 🎉
 
 Atura el publisher amb `Ctrl+C`.
 
