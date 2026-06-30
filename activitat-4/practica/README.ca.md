@@ -360,7 +360,6 @@ Al quadre de text de la query, escriu:
 from(bucket: "sensors")
   |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
   |> filter(fn: (r) => r._measurement == "temperatura")
-  |> filter(fn: (r) => r._field == "valor")
 ```
 
 ### 7.3 Configurar el panell
@@ -395,7 +394,6 @@ Clica **Back to dashboard** (fletxa a dalt a l'esquerra).
 from(bucket: "sensors")
   |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
   |> filter(fn: (r) => r._measurement == "humitat")
-  |> filter(fn: (r) => r._field == "valor")
 ```
 
 4. **Title**: `Humitat Aula`
