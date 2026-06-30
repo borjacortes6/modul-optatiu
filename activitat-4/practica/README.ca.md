@@ -197,26 +197,27 @@ Ara has d'afegir un node **influxdb out** al teu flow perquè les dades es guard
 1. Arrossega un node **influxdb out** (categoria **storage**)
 2. Dona-li **doble clic**
 3. A **Server**, clica el botó ⊞ **Add new influxdb...**
-4. Configura:
+4. Al camp **InfluxDB Version**, selecciona **2.0**
+5. Configura:
 
 | Camp | Valor |
 |:-----|:------|
+| **Name** | `InfluxDB` |
 | **URL** | `http://influxdb:8086` |
 | **Token** | `elmeutoken` |
-| **Organization** | `iot` |
-| **Alias** | `InfluxDB` |
 
-5. Clica **Add**
+6. Clica **Add**
 
-> ⚠️ **Important:** Si els camps que veus són **Host, Database, Username, Password** (en lloc d'URL, Token, Organization), és que està en mode v1.x. Busca el desplegable **Version** i canvia'l a **InfluxDB v2.x** — els camps canviaran automàticament.
+> ⚠️ **Important:** Si els camps que veus són **Host, Port, Database, Username, Password** (en lloc d'URL, Token), és que el **Version** està en mode `1.x`. Canvia'l a **2.0**.
 
 ### Pas 2: Configurar el node influxdb out
 
-Al mateix node, configura:
+Ara, al mateix node, configura:
 
 | Camp | Valor |
 |:-----|:------|
 | **Name** | `Guardar temperatura` |
+| **Organization** | `iot` |
 | **Bucket** | `sensors` |
 | **Measurement** | `temperatura` |
 
@@ -247,6 +248,7 @@ Per fer-ho:
 2. Configura'l:
    - **Server**: selecciona `InfluxDB` (el que has creat abans)
    - **Name**: `Guardar humitat`
+   - **Organization**: `iot`
    - **Bucket**: `sensors`
    - **Measurement**: `humitat`
 3. Connecta'l a la sortida del **MQTT input d'humitat**
