@@ -428,15 +428,18 @@ Arrossega aquests nodes a l'editor i connecta'ls:
 **Pas a pas:**
 
 1. **📡 MQTT Input** (`mqtt in`):
-   - Dona-li doble clic
-   - Server: **Add new mqtt-broker...**
-   - Connection: Server: `mqtt-broker`, Port: `1883`
-   - Name: `Temperatura Aula`
-   - Topic: `NomAlumne/aula_1/temperatura`
-   - Output: **a parsed JSON Object** (més endavant)
+   - Arrossega'l al canvas
+   - Dona-li doble clic per obrir-lo
+   - Al camp **Server** clica el botó ⊞ **Add new mqtt-broker...**
+   - A la finestra que s'obre, posa:
+     - **Server** → `mqtt-broker`
+     - **Port** → `1883`
    - Clica **Add**
+   - Al camp **Topic** posa: `NomAlumne/aula_1/temperatura`
+   - **Name**: `Temperatura Aula`
+   - Clica **Done**
 
-> ⚠️ **No posis `localhost`!** Com que Node-RED i Mosquitto estan a contenidors diferents, cal usar el nom del contenidor (`mqtt-broker`). Docker el resol automàticament perquè estan a la mateixa xarxa.
+> ⚠️ **No posis `localhost`!** Node-RED i Mosquitto estan a contenidors diferents. `mqtt-broker` és el nom del contenidor de Mosquitto — Docker el resol automàticament.
 
 2. **🔧 JSON**:
    - Busca `json` i arrossega'l
