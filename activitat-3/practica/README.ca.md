@@ -264,6 +264,58 @@ Al segon terminal veuràs tots els missatges perquè s'ha subscrit a `casa/#`.
 
 ---
 
+### ✍️ Exercicis
+
+Documenta al teu informe tot el que fas.
+
+**1. Subscriu-te al topic `Borja/#`:**
+```bash
+mosquitto_sub -h localhost -t "Borja/#"
+```
+Des del terminal 1, publica un valor de temperatura:
+```bash
+mosquitto_pub -h localhost -t "Borja/aula_1/temperatura" -m "22.5"
+```
+📝 *Al informe: captura mostrant que el valor arriba al subscriptor.*
+
+---
+
+**2. Publica un valor d'humitat:**
+```bash
+mosquitto_pub -h localhost -t "Borja/aula_1/humitat" -m "58"
+```
+📝 *Al informe: comprova que arriba al terminal 2 (subscrit a `Borja/#`).*
+
+---
+
+**3. Subscriu-te amb comodí:**
+Atura el subscriptor anterior amb `Ctrl+C` i prova:
+```bash
+mosquitto_sub -h localhost -t "+/aula_1/temperatura"
+```
+Des del terminal 1, publica:
+```bash
+mosquitto_pub -h localhost -t "Borja/aula_1/temperatura" -m "23.0"
+mosquitto_pub -h localhost -t "Borja/aula_1/humitat" -m "60"
+```
+❓ *Per què només reps la temperatura i no la humitat?* Explica-ho a l'informe.
+
+---
+
+**4. Publica 3 lectures seguides:**
+```bash
+mosquitto_pub -h localhost -t "Borja/aula_1/temperatura" -m "21.0"
+mosquitto_pub -h localhost -t "Borja/aula_1/temperatura" -m "21.5"
+mosquitto_pub -h localhost -t "Borja/aula_1/temperatura" -m "22.0"
+```
+📝 *Al informe: mostra les tres lectures rebudes al subscriptor.*
+
+---
+
+**Atura el subscriptor** amb `Ctrl+C` abans de continuar.
+
+---
+
 ## 5️⃣ Configura Node-RED
 
 ### Accedeix a Node-RED
