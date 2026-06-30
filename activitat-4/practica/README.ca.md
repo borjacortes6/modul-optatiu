@@ -358,8 +358,8 @@ Al quadre de text de la query, escriu **cada línia per separat** (pitja Enter d
 
 ```flux
 from(bucket: "sensors")
-|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
-|> filter(fn: (r) => r._measurement == "temperatura")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r._measurement == "temperatura")
 ```
 
 > ⚠️ **Important:** Cada `|>` va en una **línia nova**. No ho posis tot seguit!
@@ -391,8 +391,8 @@ Clica **Back to dashboard** (fletxa a dalt a l'esquerra).
 
 ```flux
 from(bucket: "sensors")
-|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
-|> filter(fn: (r) => r._measurement == "humitat")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r._measurement == "humitat")
 ```
 
 4. **Title**: `Humitat Aula`
