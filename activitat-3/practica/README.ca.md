@@ -203,9 +203,9 @@ Abans de començar, recorda els conceptes bàsics:
 │  ┌─────────────────────────────────────────────────┐   │
 │  │              📂 Topics (canals)                  │   │
 │  │                                                  │   │
-│  │    casa/sala/temperatura  ←── 23.5               │   │
-│  │    casa/sala/humitat      ←── 65                 │   │
-│  │    casa/sala/llum         ──→ ON                 │   │
+│  │    NomAlumne/aula_1/temperatura  ←── 23.5               │   │
+│  │    NomAlumne/aula_1/humitat      ←── 65                 │   │
+│  │    NomAlumne/aula_1/llum         ──→ ON                 │   │
 │  │                                                  │   │
 │  └─────────────────────────────────────────────────┘   │
 │          ▲                              ▲               │
@@ -219,7 +219,7 @@ Abans de començar, recorda els conceptes bàsics:
 └───────────────────────────────────────────────────────┘
 ```
 
-- **Topic** — un canal dins del Broker (ex: `casa/sala/temperatura`)
+- **Topic** — un canal dins del Broker (ex: `NomAlumne/aula_1/temperatura`)
 - **Publicar** — enviar un missatge a un topic (com un *tweet*)
 - **Subscriure's** — escoltar un topic per rebre'n (com *seguir* un tema)
 
@@ -232,7 +232,7 @@ sudo apt install -y mosquitto-clients
 ### Subscriu-te a un topic (obre un **segon terminal**):
 
 ```bash
-mosquitto_sub -h localhost -t "casa/#"
+mosquitto_sub -h localhost -t "NomAlumne/#"
 ```
 
 Aquest terminal es quedarà escoltant. Torna al primer terminal.
@@ -240,7 +240,7 @@ Aquest terminal es quedarà escoltant. Torna al primer terminal.
 ### Publica un missatge des del primer terminal:
 
 ```bash
-mosquitto_pub -h localhost -t "casa/sala/temperatura" -m "23.5"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "23.5"
 ```
 
 Si tot funciona, al **segon terminal** hauries de veure:
@@ -252,17 +252,17 @@ Si tot funciona, al **segon terminal** hauries de veure:
 Prova més missatges:
 
 ```bash
-mosquitto_pub -h localhost -t "casa/sala/humitat" -m "65"
-mosquitto_pub -h localhost -t "casa/exterior/temperatura" -m "18.2"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/humitat" -m "65"
+mosquitto_pub -h localhost -t "NomAlumne/exterior/temperatura" -m "18.2"
 ```
 
-Al segon terminal veuràs tots els missatges perquè s'ha subscrit a `casa/#`.
+Al segon terminal veuràs tots els missatges perquè s'ha subscrit a `NomAlumne/#`.
 
 > 💡 **Consell:** Si afegeixes `-v` al subscriptor, veuràs el topic i el valor junts:
 > ```bash
-> mosquitto_sub -h localhost -t "casa/#" -v
+> mosquitto_sub -h localhost -t "NomAlumne/#" -v
 > ```
-> Sortida: `casa/sala/temperatura 23.5`
+> Sortida: `NomAlumne/aula_1/temperatura 23.5`
 
 **Atura el subscriptor** amb `Ctrl+C`.
 
@@ -369,37 +369,48 @@ mosquitto_pub -h localhost -t "NomAlumne/aula_1/humitat" -m "78"
 
 ## 5️⃣ Configura Node-RED
 
-### Accedeix a Node-RED
+Com que la VM és Ubuntu Server (sense escriptori gràfic), primer verificarem que Node-RED respon i instal·larem el dashboard des del terminal. Després podràs accedir-hi des del navegador de l'ordinador amfitrió (Windows/macOS).
 
-Obre el navegador **al teu Windows/macOS** (o a la VM si tens escriptori gràfic) i ves a:
-
-```
-http://<IP-DE-LA-VM>:1880
-```
-
-> 💡 Per saber la IP de la VM: `ip a` o `hostname -I`
-
-Si la VM està en mode NAT i no pots accedir des del navegador del host, pots fer servir `curl` des de la mateixa VM:
+### Verifica que Node-RED funciona
 
 ```bash
-curl http://localhost:1880
+curl -s -o /dev/null -w "HTTP %{http_code}" http://localhost:1880
 ```
 
-Si veus HTML, Node-RED funciona. Per veure l'editor, necessitaràs accés gràfic.
+Si veus `HTTP 200` → ✅ Node-RED respon correctament.
 
-### Instal·la el dashboard
-
-Fes clic al menú ☰ (tres ratlles) → **Manage palette** → **Install**.
-
-Busca `node-red-dashboard` i fes clic a **Install**.
-
-Alternativament, des del terminal:
+### Instal·la el dashboard des del terminal
 
 ```bash
 docker exec nodered-dashboard npm install node-red-dashboard
-# i després reinicia
 docker restart nodered-dashboard
 ```
+
+Espera uns segons que es reinicii.
+
+### Accedeix a Node-RED des de l'amfitrió
+
+Per obrir l'editor i el dashboard al navegador, necessites la IP de la VM en mode **Bridge**:
+
+```bash
+hostname -I
+```
+
+Exemple de sortida: `192.168.1.42`
+
+Des del navegador del teu Windows/macOS:
+
+```
+http://192.168.1.42:1880
+```
+
+I el dashboard a:
+
+```
+http://192.168.1.42:1880/ui
+```
+
+> 💡 Si la VM està en mode NAT, l'acces des de l'amfitrió no funciona. Consulta el professor per canviar a Bridge o per fer servir un túnel SSH.
 
 ### Crea el teu primer flow
 
@@ -417,11 +428,13 @@ Arrossega aquests nodes a l'editor i connecta'ls:
 1. **📡 MQTT Input** (`mqtt in`):
    - Dona-li doble clic
    - Server: **Add new mqtt-broker...**
-   - Connection: Server: `localhost`, Port: `1883`
-   - Name: `Temperatura Sala`
-   - Topic: `casa/sala/temperatura`
+   - Connection: Server: `mqtt-broker`, Port: `1883`
+   - Name: `Temperatura Aula`
+   - Topic: `NomAlumne/aula_1/temperatura`
    - Output: **a parsed JSON Object** (més endavant)
    - Clica **Add**
+
+> ⚠️ **No posis `localhost`!** Com que Node-RED i Mosquitto estan a contenidors diferents, cal usar el nom del contenidor (`mqtt-broker`). Docker el resol automàticament perquè estan a la mateixa xarxa.
 
 2. **🔧 JSON**:
    - Busca `json` i arrossega'l
@@ -432,7 +445,7 @@ Arrossega aquests nodes a l'editor i connecta'ls:
    - Busca `ui_gauge` a la paleta
    - Group: **Add new ui_group...** → **Add new ui_tab**
    - Name: `Temperatura`
-   - Label: `Sala`
+   - Label: `Aula 1`
    - Range: min `0`, max `50`
    - Connecta'l al node JSON
 
@@ -446,12 +459,12 @@ Obre una pestanya nova al navegador i ves a:
 http://<IP-DE-LA-VM>:1880/ui
 ```
 
-Ara torna al terminal i publica valors de temperatura:
+Ara torna al terminal i publica valors de temperatura (al topic que has posat al flow):
 
 ```bash
-mosquitto_pub -h localhost -t "casa/sala/temperatura" -m "23.5"
-mosquitto_pub -h localhost -t "casa/sala/temperatura" -m "25.0"
-mosquitto_pub -h localhost -t "casa/sala/temperatura" -m "26.8"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "23.5"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "25.0"
+mosquitto_pub -h localhost -t "NomAlumne/aula_1/temperatura" -m "26.8"
 ```
 
 L'agulla del gauge hauria de moure's! 🎉
@@ -480,9 +493,9 @@ import json
 
 BROKER = "localhost"
 PORT = 1883
-TOPIC_TEMP = "casa/sala/temperatura"
-TOPIC_HUM = "casa/sala/humitat"
-TOPIC_PRES = "casa/sala/pressio"
+TOPIC_TEMP = "NomAlumne/aula_1/temperatura"
+TOPIC_HUM = "NomAlumne/aula_1/humitat"
+TOPIC_PRES = "NomAlumne/aula_1/pressio"
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -548,11 +561,11 @@ Hauries de veure:
 ```
 ✅ Connectat al broker localhost:1883
 🌡️  Simulador de sensors en marxa...
-📤 casa/sala/temperatura → {"valor": 25.3, "unitat": "\u00b0C"}
-📤 casa/sala/humitat → {"valor": 62.8, "unitat": "%"}
-📤 casa/sala/pressio → {"valor": 1015.2, "unitat": "hPa"}
+📤 NomAlumne/aula_1/temperatura → {"valor": 25.3, "unitat": "\u00b0C"}
+📤 NomAlumne/aula_1/humitat → {"valor": 62.8, "unitat": "%"}
+📤 NomAlumne/aula_1/pressio → {"valor": 1015.2, "unitat": "hPa"}
 ---
-📤 casa/sala/temperatura → {"valor": 24.7, "unitat": "\u00b0C"}
+📤 NomAlumne/aula_1/temperatura → {"valor": 24.7, "unitat": "\u00b0C"}
 ...
 ```
 
@@ -582,7 +595,7 @@ import json
 
 BROKER = "localhost"
 PORT = 1883
-TOPIC = "casa/#"
+TOPIC = "NomAlumne/#"
 
 def on_message(client, userdata, msg):
     topic = msg.topic
@@ -632,12 +645,12 @@ python3 ~/activitat-3/scripts/publisher.py
 
 Al terminal 1 veuràs:
 ```
-✅ Subscrit a 'casa/#'
+✅ Subscrit a 'NomAlumne/#'
 📡 Esperant dades... (Ctrl+C per aturar)
 ---
-📩 [casa/sala/temperatura] {'valor': 25.3, 'unitat': '°C'}
-📩 [casa/sala/humitat] {'valor': 62.8, 'unitat': '%'}
-📩 [casa/sala/pressio] {'valor': 1015.2, 'unitat': 'hPa'}
+📩 [NomAlumne/aula_1/temperatura] {'valor': 25.3, 'unitat': '°C'}
+📩 [NomAlumne/aula_1/humitat] {'valor': 62.8, 'unitat': '%'}
+📩 [NomAlumne/aula_1/pressio] {'valor': 1015.2, 'unitat': 'hPa'}
 ```
 
 **Tot connectat!** Sensor (publisher) → Broker → Dashboard + Subscriptor ✅
@@ -676,7 +689,7 @@ import json
 # Prova de publicació/subscripció
 pub = mqtt.Client()
 pub.connect('localhost', 1883, 60)
-pub.publish('casa/prova', json.dumps({'test': True}))
+pub.publish('NomAlumne/prova', json.dumps({'test': True}))
 print('✅ Publicació OK')
 # Tot correcte
 print('✅ Scripts preparats')
@@ -727,7 +740,7 @@ echo "=== 🎯 Tot correcte! ==="
 Si has acabat i vols provar més coses:
 
 1. **Afegeix un chart (gràfic de línies)** al dashboard per veure l'evolució de la temperatura
-2. **Crea un botó** que enviï una comanda MQTT (ex: `casa/sala/llum` → `ON`/`OFF`)
+2. **Crea un botó** que enviï una comanda MQTT (ex: `NomAlumne/aula_1/llum` → `ON`/`OFF`)
 3. **Publica dades des de dos publishers** alhora i mira com apareixen al dashboard
 4. **Afegeix InfluxDB + Grafana** al docker-compose.yml per guardar i visualitzar històrics
 5. **Escriu un script que alerti** si la temperatura passa de 30°C
