@@ -419,10 +419,10 @@ http://localhost:1880/ui
 Arrossega aquests nodes a l'editor i connecta'ls:
 
 ```
-┌──────────┐    ┌──────────┐    ┌─────────────────────┐
-│ 📡 mqtt   │───→│ 🔧 funció │───→│ 📊 ui_gauge         │
-│ in        │    │          │    │ (temperatura aula)  │
-└──────────┘    └──────────┘    └─────────────────────┘
+┌──────────┐    ┌─────────────────────┐
+│ 📡 mqtt   │───→│ 📊 ui_gauge         │
+│ in        │    │ (temperatura aula)  │
+└──────────┘    └─────────────────────┘
 ```
 
 **Pas a pas:**
@@ -442,19 +442,9 @@ Arrossega aquests nodes a l'editor i connecta'ls:
 
 > ⚠️ **No posis `localhost`!** Node-RED i Mosquitto estan a contenidors diferents. `mqtt-broker` és el nom del contenidor de Mosquitto — Docker el resol automàticament.
 
-2. **🔧 Function node** (per extreure el valor del JSON):
-   - Arrossega'l al canvas i **connecta'l** al node MQTT
-   - Dona-li **doble clic**
-   - Al camp **On Message** escriu:
-     ```javascript
-     msg.payload = msg.payload.valor;
-     return msg;
-     ```
-   - Clica **Done**
+2. **📊 UI Gauge — Configura'l pas a pas:**
 
-3. **📊 UI Gauge — Configura'l pas a pas:**
-
-   - Arrossega'l al canvas i **connecta'l** al function node (fes un cable entre els dos)
+   - Arrossega'l al canvas i **connecta'l** directament al node MQTT (fes un cable entre els dos)
    - Dona-li **doble clic**
 
    **Per crear la pestanya (Tab):**
@@ -511,13 +501,12 @@ nano ~/activitat-3/scripts/publisher.py
 #!/usr/bin/env python3
 """
 Simulador de sensor de temperatura.
-Publica temperatura a MQTT cada 5 segons en format JSON.
+Publica temperatura a MQTT cada 3 segons com a número simple (sense JSON).
 """
 
 import paho.mqtt.client as mqtt
 import time
 import random
-import json
 
 BROKER = "localhost"
 PORT = 1883
@@ -541,9 +530,8 @@ print("Prem Ctrl+C per aturar")
 try:
     while True:
         temperatura = round(random.uniform(18.0, 35.0), 1)
-        payload = json.dumps({"valor": temperatura})
-        client.publish(TOPIC, payload)
-        print(f"📤 {TOPIC} → {payload}")
+        client.publish(TOPIC, str(temperatura))
+        print(f"📤 {TOPIC} → {temperatura}")
         time.sleep(3)
 
 except KeyboardInterrupt:
@@ -571,8 +559,8 @@ Hauries de veure:
 ```
 ✅ Connectat al broker localhost:1883
 🌡️  Simulador de temperatura en marxa...
-📤 NomAlumne/aula_1/temperatura → {"valor": 25.3}
-📤 NomAlumne/aula_1/temperatura → {"valor": 24.7}
+📤 NomAlumne/aula_1/temperatura → 25.3
+📤 NomAlumne/aula_1/temperatura → 24.7
 ...
 ```
 
@@ -655,9 +643,9 @@ Al terminal 1 veuràs:
 ✅ Subscrit a 'NomAlumne/#'
 📡 Esperant dades... (Ctrl+C per aturar)
 ---
-📩 [NomAlumne/aula_1/temperatura] {'valor': 25.3, 'unitat': '°C'}
-📩 [NomAlumne/aula_1/humitat] {'valor': 62.8, 'unitat': '%'}
-📩 [NomAlumne/aula_1/pressio] {'valor': 1015.2, 'unitat': 'hPa'}
+📩 [NomAlumne/aula_1/temperatura] 25.3
+📩 [NomAlumne/aula_1/temperatura] 24.7
+📩 [NomAlumne/aula_1/temperatura] 26.8
 ```
 
 **Tot connectat!** Sensor (publisher) → Broker → Dashboard + Subscriptor ✅
