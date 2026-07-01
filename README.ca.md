@@ -12,7 +12,8 @@ Activitats d'aprofundiment en eines professionals per a IoT, sistemes encastats 
 | 2 | 🐳 **Instal·lació de Docker i eines IoT** — Docker, Compose, Python, MQTT | Fet |
 | 3 | 🚀 **Primers contenidors IoT** — Mosquitto + Node-RED + Python MQTT | Fet |
 | 4 | 🗄️ **Emmagatzematge i visualització** — InfluxDB + Grafana | ✅ Fet |
-| 5 | 🌐 **Xarxa local (LAN)** — Bridge, IPs, ping, accés des de Windows | ✅ Nova |
+| 5 | 🌐 **Xarxa local (LAN)** — Bridge, IPs, ping, accés des de Windows | ✅ Fet |
+| 6 | 🌡️ **ESP32 + DS18B20** — Sensor real, 1-Wire, MQTT, ESP-IDF | ✅ Nova |
 
 ---
 
