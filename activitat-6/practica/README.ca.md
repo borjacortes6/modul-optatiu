@@ -24,6 +24,9 @@
 
 ### Programari a la VM
 
+> 📖 Si encara no tens ESP-IDF instal·lat, segueix la **guia d'instal·lació**:
+> 👉 [`../instalacio-esp-idf.md`](../instalacio-esp-idf.md)
+
 ```bash
 # Comprova que tens el projecte
 ls ~/esp/esp32-mqtt-temp/main/
